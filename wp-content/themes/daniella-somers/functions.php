@@ -16,6 +16,59 @@ add_action('after_setup_theme', function () {
 });
 
 /**
+ * One-time production bootstrap.
+ *
+ * Earlier Site Editor changes created a database copy of the Front Page template.
+ * That copy overrides the version-controlled theme template and caused the stale
+ * contact placeholder / broken portrait block to survive deployments. Remove only
+ * that customized Front Page template once, then leave future editor changes alone.
+ */
+add_action('init', function () {
+    $reset_key = 'daniella_front_page_reset_20260906_v1';
+
+    if (get_option($reset_key)) {
+        return;
+    }
+
+    $templates = get_posts(array(
+        'post_type'      => 'wp_template',
+        'post_status'    => array('publish', 'draft'),
+        'name'           => 'front-page',
+        'posts_per_page' => -1,
+        'no_found_rows'  => true,
+    ));
+
+    foreach ($templates as $template) {
+        wp_delete_post($template->ID, true);
+    }
+
+    update_option($reset_key, gmdate('c'), false);
+}, 99);
+
+/**
+ * Ensure the small plugin set bundled in the Railway image is active.
+ * This is intentionally limited to the two plugins used by this site.
+ */
+add_action('admin_init', function () {
+    if (!current_user_can('activate_plugins')) {
+        return;
+    }
+
+    if (!function_exists('activate_plugin')) {
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
+    }
+
+    foreach (array(
+        'contact-form-7/wp-contact-form-7.php',
+        'fluent-smtp/fluent-smtp.php',
+    ) as $plugin) {
+        if (file_exists(WP_PLUGIN_DIR . '/' . $plugin) && !is_plugin_active($plugin)) {
+            activate_plugin($plugin, '', false, true);
+        }
+    }
+});
+
+/**
  * Render the first published Contact Form 7 form without hard-coding a site-specific ID.
  * This keeps the block template portable between Railway deployments and local/staging sites.
  */
