@@ -1,0 +1,1 @@
+Final supplied portrait is bundled into the WordPress theme as daniella-hero.jpg during deployment.
