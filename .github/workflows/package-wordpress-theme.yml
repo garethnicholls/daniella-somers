@@ -1,0 +1,41 @@
+name: Package WordPress Theme
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'wp-content/themes/daniella-somers/**'
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate theme files
+        run: |
+          test -f wp-content/themes/daniella-somers/style.css
+          test -f wp-content/themes/daniella-somers/theme.json
+          test -d wp-content/themes/daniella-somers/templates
+          test -d wp-content/themes/daniella-somers/parts
+
+      - name: Build installable ZIP
+        run: |
+          mkdir -p dist
+          cd wp-content/themes
+          zip -r ../../../dist/daniella-somers.zip daniella-somers \
+            -x '*/.DS_Store' '*.log' '*.env' '.env*'
+
+      - name: Upload theme artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: daniella-somers-theme
+          path: dist/daniella-somers.zip
+          if-no-files-found: error
+          retention-days: 7
