@@ -13,12 +13,12 @@ test('homepage keeps its full-width bands and responsive inner layout', async ()
     for (const width of widths) {
       const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
       await page.goto(fixture);
-      const report = await page.evaluate(() => ({...window.layoutReport(), stylesheet: [...document.styleSheets].map(s => s.href || 'inline'), gutter: getComputedStyle(document.documentElement).getPropertyValue('--ds-page-gutter').trim()}));
+      const report = await page.evaluate(() => window.layoutReport());
+      const gutter = width <= 380 ? 18 : width <= 620 ? 24 : width <= 900 ? Math.min(30, Math.max(24, width * .035)) : Math.min(40, Math.max(18, width * .03));
       const details = `${width}px: ${JSON.stringify(report)}`;
-      console.log(details);
-      const gutter = parseFloat(report.gutter);
       assert.equal(report.document, width, `horizontal overflow: ${details}`);
       assert.ok(Math.abs(report.section.x) < 1 && Math.abs(report.section.width - width) < 1, `section is not full width: ${details}`);
+      assert.ok(Math.abs(parseFloat(report.section.padding) - gutter) < 1, `incorrect section padding: ${details}`);
       assert.ok(report.shell.x >= gutter - 1, `missing left gutter: ${details}`);
       assert.ok(report.shell.right <= width - gutter + 1, `missing right gutter: ${details}`);
       assert.ok(report.shell.width <= 1161, `content exceeds original maximum: ${details}`);
