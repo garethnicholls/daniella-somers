@@ -102,3 +102,92 @@ add_shortcode('daniella_contact_form', function () {
         esc_attr($form->post_title)
     ));
 });
+
+/**
+ * IndexNow support.
+ *
+ * The key is intentionally public: IndexNow requires it to be retrievable from the
+ * website so search engines can verify submissions. The endpoint below serves the
+ * key at the site root without needing to write into the Railway container.
+ */
+define('DANIELLA_INDEXNOW_KEY', '7b6e3a8f4e5c4fda8f28d64ce731b1ab');
+
+add_action('template_redirect', function () {
+    $requested_path = trim((string) parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH), '/');
+    $key_path = DANIELLA_INDEXNOW_KEY . '.txt';
+
+    if ($requested_path !== $key_path) {
+        return;
+    }
+
+    nocache_headers();
+    header('Content-Type: text/plain; charset=UTF-8');
+    echo DANIELLA_INDEXNOW_KEY;
+    exit;
+});
+
+function daniella_indexnow_submit($urls) {
+    $urls = array_values(array_unique(array_filter(array_map('esc_url_raw', (array) $urls))));
+
+    if (!$urls) {
+        return false;
+    }
+
+    $home = home_url('/');
+    $host = wp_parse_url($home, PHP_URL_HOST);
+
+    if (!$host) {
+        return false;
+    }
+
+    $response = wp_remote_post('https://api.indexnow.org/indexnow', array(
+        'timeout' => 10,
+        'headers' => array('Content-Type' => 'application/json; charset=utf-8'),
+        'body'    => wp_json_encode(array(
+            'host'        => $host,
+            'key'         => DANIELLA_INDEXNOW_KEY,
+            'keyLocation' => home_url('/' . DANIELLA_INDEXNOW_KEY . '.txt'),
+            'urlList'     => $urls,
+        )),
+    ));
+
+    if (is_wp_error($response)) {
+        return false;
+    }
+
+    $code = (int) wp_remote_retrieve_response_code($response);
+    return in_array($code, array(200, 202), true);
+}
+
+/** Submit the live homepage once after this deployment reaches production. */
+add_action('wp_loaded', function () {
+    $option = 'daniella_indexnow_initial_submit_v1';
+
+    if (get_option($option)) {
+        return;
+    }
+
+    if (daniella_indexnow_submit(array(home_url('/')))) {
+        update_option($option, gmdate('c'), false);
+    }
+}, 20);
+
+/** Re-submit public content whenever it is published or updated. */
+add_action('save_post', function ($post_id, $post, $update) {
+    if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+        return;
+    }
+
+    if (!$post || $post->post_status !== 'publish') {
+        return;
+    }
+
+    if (!is_post_type_viewable($post->post_type)) {
+        return;
+    }
+
+    $url = get_permalink($post_id);
+    if ($url) {
+        daniella_indexnow_submit(array($url));
+    }
+}, 20, 3);
