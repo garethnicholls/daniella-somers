@@ -1,81 +1,82 @@
-/* Responsive page gutters and device-safe spacing.
- * Section backgrounds stay full width; section content gets explicit viewport-safe
- * padding even if Gutenberg wrapper classes are altered by the editor.
- */
-:root{--ds-page-gutter:clamp(28px,4vw,48px)}
+/* Homepage layout contract. Full-width section backgrounds, centred content. */
+:root{--ds-page-gutter:clamp(18px,3vw,40px)}
 
-/* Robust fallback: apply the gutter to the full-width sections themselves. */
-.ds-hero,
-.ds-quote,
-.ds-section,
-.ds-contact{
+/* Only reset the canvas, never its section children. */
+.home .wp-block-post-content,
+.home .wp-block-post-content > main,
+.editor-styles-wrapper .wp-block-post-content,
+.editor-styles-wrapper .wp-block-post-content > main{
+  width:100%!important;max-width:none!important;min-width:0!important;
+  margin-left:0!important;margin-right:0!important;
+  padding-left:0!important;padding-right:0!important;
+}
+
+/* Full-bleed backgrounds with actual content gutters. */
+.home .wp-block-post-content :is(.ds-hero,.ds-quote,.ds-section,.ds-contact),
+.editor-styles-wrapper .wp-block-post-content :is(.ds-hero,.ds-quote,.ds-section,.ds-contact){
+  width:100%!important;max-width:none!important;min-width:0!important;
+  margin-left:0!important;margin-right:0!important;
   padding-left:var(--ds-page-gutter)!important;
-  padding-right:var(--ds-page-gutter)!important;
+  padding-right:var(--ds-page-gutter)!important;box-sizing:border-box!important;
+}
+.home .wp-block-post-content .ds-shell,
+.editor-styles-wrapper .wp-block-post-content .ds-shell{
+  width:100%!important;max-width:var(--max)!important;min-width:0!important;
+  margin-left:auto!important;margin-right:auto!important;
+  padding-left:0!important;padding-right:0!important;box-sizing:border-box!important;
 }
 
-/* Inner shells stay centred and do not add a second gutter. */
-.ds-hero>.ds-shell,
-.ds-quote>.ds-shell,
-.ds-section>.ds-shell,
-.ds-contact>.ds-shell,
-.ds-hero .ds-shell,
-.ds-quote .ds-shell,
-.ds-section .ds-shell,
-.ds-contact .ds-shell{
-  width:100%!important;
-  max-width:var(--max)!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-  padding-left:0!important;
-  padding-right:0!important;
+/* Override WordPress content-width constraints on structural grids and their children. */
+.home .wp-block-post-content :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust),
+.editor-styles-wrapper .wp-block-post-content :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust){width:100%!important;max-width:none!important;min-width:0!important}
+.home .wp-block-post-content :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust) > .wp-block-group,
+.editor-styles-wrapper .wp-block-post-content :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust) > .wp-block-group{
+  max-width:none!important;min-width:0!important;margin-left:0!important;margin-right:0!important;
 }
+/* A grid can itself be the shell: keep its original content maximum. */
+.home .wp-block-post-content .ds-shell:is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust),
+.editor-styles-wrapper .wp-block-post-content .ds-shell:is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust){max-width:var(--max)!important;margin-left:auto!important;margin-right:auto!important}
 
-/* Header has no full-width section wrapper, so keep its gutter on the shell. */
-.ds-header-inner.ds-shell{
-  width:100%!important;
-  max-width:calc(var(--max) + (var(--ds-page-gutter) * 2))!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-  padding-left:var(--ds-page-gutter)!important;
-  padding-right:var(--ds-page-gutter)!important;
+.home .wp-block-post-content .ds-hero-grid,
+.editor-styles-wrapper .wp-block-post-content .ds-hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,.88fr)!important;gap:clamp(32px,5vw,80px)!important}
+.home .wp-block-post-content .ds-split,
+.editor-styles-wrapper .wp-block-post-content .ds-split{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr)!important;gap:clamp(32px,5vw,80px)!important}
+.home .wp-block-post-content .ds-card-grid,
+.editor-styles-wrapper .wp-block-post-content .ds-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+.home .wp-block-post-content .ds-contact-layout,
+.editor-styles-wrapper .wp-block-post-content .ds-contact-layout{grid-template-columns:minmax(0,.82fr) minmax(0,1fr) minmax(0,.92fr)!important}
+
+.ds-header-inner.ds-shell,.ds-footer-inner.ds-shell{
+  width:100%!important;max-width:calc(var(--max) + (var(--ds-page-gutter) * 2))!important;
+  margin-left:auto!important;margin-right:auto!important;
+  padding-left:var(--ds-page-gutter)!important;padding-right:var(--ds-page-gutter)!important;
 }
+.ds-hero-grid.ds-shell{padding-left:0!important;padding-right:0!important}
+.home .wp-block-post-content :is(.ds-hero-copy,.ds-portrait-wrap,.ds-hero-editable-image,.ds-room-image,.ds-bacp-image,.ds-contact-copy,.ds-contact-form-card,.ds-contact-photo-card,.ds-trust-card){min-width:0!important;max-width:100%!important}
+.home .wp-block-post-content :is(.ds-hero-editable-image,.ds-room-image,.ds-bacp-image,.ds-contact-portrait) img{max-width:100%!important}
+.home .ds-contact-form-card :is(input,textarea,select){max-width:100%;box-sizing:border-box}
 
-/* Hero spacing remains vertical only; horizontal space comes from .ds-hero. */
-.ds-hero-grid.ds-shell{
-  padding-left:0!important;
-  padding-right:0!important;
+@media(max-width:1279px) and (min-width:901px){
+  .home .wp-block-post-content .ds-contact-layout,.editor-styles-wrapper .wp-block-post-content .ds-contact-layout{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)!important}
+  .home .wp-block-post-content .ds-contact-trust,.editor-styles-wrapper .wp-block-post-content .ds-contact-trust{grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
-
-/* Prevent editable media and form cards from ever pushing beyond the padded canvas. */
-.ds-hero-editable-image,
-.ds-room-image,
-.ds-bacp-image,
-.ds-contact-photo-card,
-.ds-contact-form-card,
-.ds-trust-card{
-  max-width:100%!important;
-  min-width:0!important;
-}
-
-@media(max-width:1100px){
-  :root{--ds-page-gutter:clamp(30px,4vw,40px)}
-}
-
 @media(max-width:900px){
-  :root{--ds-page-gutter:30px}
-  .ds-hero-grid{padding-top:54px!important;padding-bottom:70px!important}
-  .ds-contact-layout,.ds-split{min-width:0}
+  :root{--ds-page-gutter:clamp(24px,3.5vw,30px)}
+  .home .wp-block-post-content :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-contact-layout,.ds-contact-grid),
+  .editor-styles-wrapper .wp-block-post-content :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-contact-layout,.ds-contact-grid){grid-template-columns:minmax(0,1fr)!important}
+  .home .wp-block-post-content .ds-contact-trust,.editor-styles-wrapper .wp-block-post-content .ds-contact-trust{grid-column:auto;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .home .wp-block-post-content .ds-hero-grid{min-height:0!important;padding-top:54px!important;padding-bottom:70px!important}
+  .home .wp-block-post-content .ds-section{padding-top:74px!important;padding-bottom:74px!important}
+  .home .wp-block-post-content .ds-quote{padding-top:64px!important;padding-bottom:64px!important}
 }
-
 @media(max-width:620px){
   :root{--ds-page-gutter:24px}
-  .ds-section{padding-top:60px!important;padding-bottom:60px!important}
-  .ds-quote{padding-top:52px!important;padding-bottom:52px!important}
-  .ds-contact-editor,.ds-contact{padding-top:60px!important;padding-bottom:64px!important}
-  .ds-contact-form-card{padding:22px!important}
+  .home .wp-block-post-content .ds-section{padding-top:60px!important;padding-bottom:60px!important}
+  .home .wp-block-post-content .ds-quote{padding-top:52px!important;padding-bottom:52px!important}
+  .home .wp-block-post-content .ds-contact{padding-top:60px!important;padding-bottom:64px!important}
+  .home .wp-block-post-content .ds-contact-trust,.editor-styles-wrapper .wp-block-post-content .ds-contact-trust{grid-template-columns:minmax(0,1fr)!important}
+  .home .wp-block-post-content .ds-contact-form-card{padding:22px!important}
+  .home .wp-block-post-content .ds-section-title{font-size:clamp(36px,10vw,52px)!important;line-height:1.02!important;overflow-wrap:break-word}
+  .home .wp-block-post-content .ds-display{font-size:clamp(48px,13vw,72px)!important;line-height:.92!important;overflow-wrap:break-word}
 }
-
-@media(max-width:380px){
-  :root{--ds-page-gutter:18px}
-  .ds-contact-form-card{padding:18px!important}
-}
+@media(max-width:380px){:root{--ds-page-gutter:18px}.home .wp-block-post-content .ds-contact-form-card{padding:18px!important}}
