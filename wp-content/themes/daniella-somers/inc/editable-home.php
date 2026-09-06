@@ -17,10 +17,19 @@ add_action('wp_enqueue_scripts', function () {
         array('daniella-somers-exact'),
         $version
     );
+
+    $responsive_path = get_theme_file_path('responsive-gutters.css');
+    $responsive_version = file_exists($responsive_path) ? (string) filemtime($responsive_path) : $version;
+    wp_enqueue_style(
+        'daniella-somers-responsive-gutters',
+        get_theme_file_uri('responsive-gutters.css'),
+        array('daniella-somers-editable-home'),
+        $responsive_version
+    );
 }, 20);
 
 add_action('after_setup_theme', function () {
-    add_editor_style('editable-home.css');
+    add_editor_style(array('editable-home.css', 'responsive-gutters.css'));
 });
 
 function daniella_get_default_home_content() {
