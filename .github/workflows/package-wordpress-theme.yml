@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - 'wp-content/themes/daniella-somers/**'
+      - '.github/workflows/package-wordpress-theme.yml'
 
 permissions:
   contents: read
@@ -20,6 +21,7 @@ jobs:
 
       - name: Validate theme files
         run: |
+          set -euo pipefail
           test -f wp-content/themes/daniella-somers/style.css
           test -f wp-content/themes/daniella-somers/theme.json
           test -d wp-content/themes/daniella-somers/templates
@@ -27,10 +29,15 @@ jobs:
 
       - name: Build installable ZIP
         run: |
-          mkdir -p dist
-          cd wp-content/themes
-          zip -r ../../dist/daniella-somers.zip daniella-somers \
+          set -euo pipefail
+          OUTPUT_DIR="$GITHUB_WORKSPACE/dist"
+          OUTPUT_FILE="$OUTPUT_DIR/daniella-somers.zip"
+          mkdir -p "$OUTPUT_DIR"
+          cd "$GITHUB_WORKSPACE/wp-content/themes"
+          zip -r "$OUTPUT_FILE" daniella-somers \
             -x '*/.DS_Store' '*.log' '*.env' '.env*'
+          test -s "$OUTPUT_FILE"
+          unzip -l "$OUTPUT_FILE" | grep -q 'daniella-somers/style.css'
 
       - name: Upload theme artifact
         uses: actions/upload-artifact@v4
