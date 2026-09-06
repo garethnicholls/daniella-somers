@@ -1,0 +1,28 @@
+/* Final hero treatment refinements. The portrait image itself is stored locally in portrait.css. */
+
+/* Shared accessibility / rendering */
+.portrait-photo{display:block;width:100%;height:100%;background-size:cover;background-repeat:no-repeat;background-position:50% 18%}
+
+/* Main / Option A: clean neutral editorial */
+body:not(.option-b):not(.option-c) .portrait-wrap{position:relative;width:min(100%,470px);margin-inline:auto}
+body:not(.option-b):not(.option-c) .portrait-wrap::before{content:"";position:absolute;inset:-22px 28px 28px -22px;background:var(--clay);border-radius:52% 48% 54% 46%;transform:rotate(-4deg);opacity:.68}
+body:not(.option-b):not(.option-c) .portrait{position:relative;aspect-ratio:4/5;border-radius:48% 48% 18px 18px;overflow:hidden;box-shadow:0 28px 70px rgba(38,49,43,.15)}
+
+/* Option B: structured professional crop */
+.option-b .hero-photo{position:relative;min-height:650px;background:var(--mist);overflow:hidden}
+.option-b .hero-photo .portrait-photo{min-height:650px;background-position:50% 17%}
+.option-b .hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(18,38,58,.16) 100%);pointer-events:none}
+.option-b .photo-label{z-index:2}
+
+/* Option C: soft rounded warm crop */
+.option-c .portrait-wrap{position:relative;width:min(100%,475px);margin-inline:auto}
+.option-c .portrait-wrap::before{content:"";position:absolute;inset:18px -26px -22px 26px;background:var(--blush);border-radius:45% 55% 56% 44%;transform:rotate(7deg)}
+.option-c .portrait{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:48% 48% 30px 30px;box-shadow:0 26px 65px rgba(81,44,58,.15);background:#f7e8eb}
+.option-c .portrait-photo{background-position:50% 18%;filter:saturate(.92) contrast(.98)}
+
+@media(max-width:800px){
+  .portrait-photo{background-position:50% 14%}
+  .option-b .hero-photo{min-height:520px}
+  .option-b .hero-photo .portrait-photo{min-height:520px;background-position:50% 14%}
+  .option-c .portrait-wrap{width:min(88%,520px);margin-top:15px}
+}
