@@ -1,72 +1,15 @@
-/* Editable Home page additions. The content lives in Pages > Home; this file only styles it. */
-
-/*
- * The homepage used to live directly in the front-page template. Once it was moved
- * into wp:post-content, WordPress' global content-width rules started constraining
- * every top-level homepage section. That makes the designed full-width hero,
- * coloured bands and contact section collapse into the normal text column.
- *
- * Keep the page editable, but explicitly restore the original full-width canvas.
- * These rules also protect pages already saved in the editor, so no user content is
- * overwritten or reset by the fix.
- */
-.home .wp-block-post-content,
-.home .wp-block-post-content > main,
-.home .wp-block-post-content > .wp-block-group,
-.home .wp-block-post-content > main > .wp-block-group{
-  max-width:none!important;
-  width:100%!important;
-}
-.home .wp-block-post-content{
-  margin-block-start:0!important;
-  margin-block-end:0!important;
-  padding-left:0!important;
-  padding-right:0!important;
-}
-.home .wp-block-post-content > main{
-  margin:0!important;
-  padding:0!important;
-}
-.home .wp-block-post-content > main > .ds-hero,
-.home .wp-block-post-content > main > .ds-quote,
-.home .wp-block-post-content > main > .ds-section,
-.home .wp-block-post-content > main > .ds-contact,
-.home .wp-block-post-content > .ds-hero,
-.home .wp-block-post-content > .ds-quote,
-.home .wp-block-post-content > .ds-section,
-.home .wp-block-post-content > .ds-contact{
-  max-width:none!important;
-  width:100%!important;
-  margin-left:0!important;
-  margin-right:0!important;
-  margin-block-start:0!important;
-  margin-block-end:0!important;
-}
-.home .wp-block-post-content .ds-shell{
-  max-width:var(--max)!important;
-  width:min(calc(100% - 48px),var(--max))!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-}
-
-/* Core Image blocks are deliberately used so images can be replaced from Media Library. */
-.ds-hero-editable-image,
-.ds-hero-editable-image img{width:100%!important;height:100%!important;margin:0!important}
-.ds-hero-editable-image img{display:block;object-fit:cover;object-position:center 12%}
-
-/* Additional supplied photography/trust imagery: native blocks, original layout preserved. */
-.ds-room-image,
-.ds-bacp-image{margin:0!important;overflow:hidden}
+/* Editable content styling only. Layout and responsive gutters are owned by responsive-gutters.css. */
+.ds-hero-editable-image{width:100%;height:100%;margin:0!important}
+.ds-hero-editable-image img{display:block;width:100%!important;height:100%!important;object-fit:cover;object-position:center 12%}
+.ds-room-image,.ds-bacp-image{margin:0!important;overflow:hidden;max-width:100%}
 .ds-room-image{aspect-ratio:4/3;border-radius:18px;box-shadow:0 18px 44px rgba(81,44,58,.08)}
 .ds-room-image img{width:100%!important;height:100%!important;display:block;object-fit:cover;object-position:center}
-.ds-bacp-image{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}
+.ds-bacp-image{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;box-sizing:border-box}
 .ds-bacp-image img{width:100%!important;height:auto!important;display:block;object-fit:contain}
-
-/* Contact section inspired by the approved visual mock-up while remaining native blocks. */
 .ds-contact-editor{background:#f5e4e6;color:var(--ink);padding:88px 0 96px}
 .ds-contact-editor .ds-kicker{color:var(--berry)}
 .ds-contact-editor .ds-section-title{color:var(--wine);max-width:680px}
-.ds-contact-layout{display:grid!important;grid-template-columns:minmax(0,.82fr) minmax(360px,1fr) minmax(300px,.92fr);gap:18px;align-items:start}
+.ds-contact-layout{display:grid!important;grid-template-columns:minmax(0,.82fr) minmax(0,1fr) minmax(0,.92fr);gap:18px;align-items:start}
 .ds-contact-copy{padding:10px 20px 24px 0}
 .ds-contact-copy>p:not(.ds-kicker):not(.ds-contact-location){max-width:430px;color:var(--muted)}
 .ds-contact-editor .ds-contact-links{display:grid!important;gap:10px;margin-top:24px!important}
@@ -74,25 +17,19 @@
 .ds-contact-editor .ds-contact-links .wp-block-button__link{background:#fff!important;color:var(--wine)!important;border-color:var(--line)!important;box-shadow:0 8px 24px rgba(81,44,58,.05);text-transform:none;letter-spacing:0;font-size:14px;min-height:46px;padding:0 16px}
 .ds-contact-location{margin:20px 0 6px!important;color:var(--wine)!important;font-weight:600}
 .ds-contact-editor .ds-bacp-link{color:var(--berry);text-decoration:underline;text-underline-offset:5px}
-
-.ds-contact-form-card,
-.ds-contact-photo-card,
-.ds-trust-card{background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 50px rgba(81,44,58,.06)}
+.ds-contact-form-card,.ds-contact-photo-card,.ds-trust-card{background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 50px rgba(81,44,58,.06)}
 .ds-contact-form-card{padding:30px}
 .ds-contact-form-card h3{font:400 clamp(34px,3.1vw,48px)/1.05 Georgia,serif;color:var(--wine);margin:0 0 8px!important}
 .ds-contact-form-card .ds-contact-note{color:var(--muted);margin:0 0 22px!important}
 .ds-contact-form-card .wpcf7-form p{margin:0 0 15px!important;color:var(--wine);font-size:13px}
 .ds-contact-form-card .wpcf7-form-control-wrap{display:block;margin-top:6px}
-.ds-contact-form-card input:not([type="submit"]),
-.ds-contact-form-card textarea{width:100%;max-width:100%;border:1px solid rgba(81,44,58,.2);background:#fff;border-radius:10px;padding:12px 13px;color:var(--ink);font:inherit;outline:none;box-shadow:none}
+.ds-contact-form-card input:not([type="submit"]),.ds-contact-form-card textarea{width:100%;max-width:100%;border:1px solid rgba(81,44,58,.2);background:#fff;border-radius:10px;padding:12px 13px;color:var(--ink);font:inherit;outline:none;box-shadow:none}
 .ds-contact-form-card input:not([type="submit"]){min-height:46px}
 .ds-contact-form-card textarea{min-height:132px;resize:vertical}
-.ds-contact-form-card input:not([type="submit"]):focus,
-.ds-contact-form-card textarea:focus{border-color:var(--berry);box-shadow:0 0 0 3px rgba(135,68,93,.12)}
+.ds-contact-form-card input:not([type="submit"]):focus,.ds-contact-form-card textarea:focus{border-color:var(--berry);box-shadow:0 0 0 3px rgba(135,68,93,.12)}
 .ds-contact-form-card input[type="submit"]{width:100%;min-height:50px;border:0;border-radius:999px;background:var(--berry);color:#fff;padding:0 20px;font:600 13px/1 Arial,sans-serif;cursor:pointer}
 .ds-contact-form-card input[type="submit"]:hover{filter:brightness(.96)}
 .ds-contact-privacy{font-size:11px!important;line-height:1.55!important;color:var(--muted)!important;margin:14px 0 0!important}
-
 .ds-contact-trust{display:grid!important;gap:14px}
 .ds-contact-photo-card{padding:0;overflow:hidden}
 .ds-contact-portrait{margin:0!important;aspect-ratio:4/4.15;overflow:hidden}
@@ -102,50 +39,9 @@
 .ds-trust-list{list-style:none;margin:0!important;padding:0!important;display:grid;gap:12px;color:var(--wine)}
 .ds-trust-list li{position:relative;padding-left:22px;font-size:13px;line-height:1.45}
 .ds-trust-list li:before{content:"✓";position:absolute;left:0;top:0;color:var(--berry);font-weight:700}
-
-/* Legacy placeholders remain editor-only until the migration converts them to Image blocks. */
 .ds-media-slot{display:none}
 .editor-styles-wrapper .ds-media-slot{display:flex!important;min-height:150px;align-items:center;justify-content:center;text-align:center;border:2px dashed rgba(135,68,93,.35);background:rgba(255,255,255,.55);border-radius:18px;padding:24px;color:var(--berry)}
 .editor-styles-wrapper .ds-media-slot p{margin:0!important;font-size:13px!important;max-width:260px}
-
-/* Give the editor enough width to make the visual layout genuinely useful. */
-.editor-styles-wrapper .wp-block-post-content>.ds-hero,
-.editor-styles-wrapper .wp-block-post-content>.ds-quote,
-.editor-styles-wrapper .wp-block-post-content>.ds-section,
-.editor-styles-wrapper .wp-block-post-content>.ds-contact,
-.editor-styles-wrapper .wp-block-post-content>main,
-.editor-styles-wrapper .wp-block-post-content>main>.ds-hero,
-.editor-styles-wrapper .wp-block-post-content>main>.ds-quote,
-.editor-styles-wrapper .wp-block-post-content>main>.ds-section,
-.editor-styles-wrapper .wp-block-post-content>main>.ds-contact{max-width:none!important;width:100%!important}
-.editor-styles-wrapper .ds-contact-layout{grid-template-columns:minmax(0,.82fr) minmax(320px,1fr) minmax(270px,.92fr)!important}
-
-/* Fluid sizing: preserves the approved desktop proportions and scales cleanly between breakpoints. */
-.ds-section{padding-top:clamp(64px,7vw,104px);padding-bottom:clamp(64px,7vw,104px)}
-.ds-contact-editor{padding-top:clamp(64px,7vw,88px);padding-bottom:clamp(72px,8vw,96px)}
-
-@media(max-width:1100px){
-  .ds-contact-layout{grid-template-columns:minmax(0,.8fr) minmax(360px,1.2fr)}
-  .ds-contact-trust{grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  .ds-trust-card{align-self:stretch}
-}
-
-@media(max-width:900px){
-  .home .wp-block-post-content .ds-shell{width:min(calc(100% - 36px),var(--max))!important}
-  .ds-contact-editor{padding:72px 0}
-  .ds-contact-layout{grid-template-columns:1fr;gap:18px}
-  .ds-contact-copy{padding-right:0}
-  .ds-contact-trust{grid-column:auto;grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  .editor-styles-wrapper .ds-contact-layout{grid-template-columns:1fr!important}
-}
-
-@media(max-width:620px){
-  .home .wp-block-post-content .ds-shell{width:min(calc(100% - 28px),var(--max))!important}
-  .ds-contact-editor{padding:64px 0}
-  .ds-contact-form-card{padding:22px}
-  .ds-contact-trust{grid-template-columns:1fr!important}
-  .ds-contact-editor .ds-contact-links .wp-block-button,
-  .ds-contact-editor .ds-contact-links .wp-block-button__link{width:100%}
-  .ds-room-image{border-radius:14px}
-  .ds-bacp-image{padding:9px}
-}
+@media(max-width:900px){.ds-contact-copy{padding-right:0}.ds-contact-editor{padding-top:72px;padding-bottom:72px}.ds-contact-trust{grid-template-columns:repeat(2,minmax(0,1fr))}.ds-contact-form-card{padding:26px}}
+@media(max-width:620px){.ds-contact-editor{padding-top:60px;padding-bottom:64px}.ds-contact-trust{grid-template-columns:1fr}.ds-contact-form-card{padding:22px}.ds-contact-editor .ds-contact-links .wp-block-button,.ds-contact-editor .ds-contact-links .wp-block-button__link{width:100%}.ds-room-image{border-radius:14px}.ds-bacp-image{padding:9px}}
+@media(max-width:380px){.ds-contact-form-card{padding:18px}}
