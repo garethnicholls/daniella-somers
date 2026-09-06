@@ -33,13 +33,28 @@ function daniella_media_contains($blocks, $class) {
 function daniella_media_empty_legacy($block, $class) {
     if (!daniella_media_has_class($block, $class)) { return false; }
     $expected = $class === 'ds-room-slot' ? 'Add the counselling room photo here using an Image block.' : 'Add the supplied BACP Registered Member image here using an Image block.';
-    $html = strtolower($block['innerHTML'] ?? '');
-    if (strpos($html, '<img') !== false) { return false; }
+    if (stripos($block['innerHTML'] ?? '', '<img') !== false) { return false; }
     $children = $block['innerBlocks'] ?? array();
     return count($children) === 1 && $children[0]['blockName'] === 'core/paragraph' && trim(wp_strip_all_tags($children[0]['innerHTML'])) === $expected;
 }
 
-/** Return only deliberately inserted content; never replace an existing image. */
+/** Insert a child before the closing wrapper, without rewriting existing children. */
+function daniella_media_append(&$block, $child) {
+    if (!isset($block['innerBlocks'], $block['innerContent'])) { return false; }
+    $block['innerBlocks'][] = $child;
+    $position = count($block['innerContent']) - 1;
+    array_splice($block['innerContent'], $position, 0, array(null));
+    return true;
+}
+
+function daniella_media_qualification_group() {
+    return daniella_media_group('ds-qualification-media', array(
+        daniella_media_image('ds-qualification-bacp ds-bacp-image'),
+        daniella_media_image('ds-qualification-room ds-room-image'),
+    ));
+}
+
+/** Only transform known empty placeholders. Existing images and custom blocks are untouched. */
 function daniella_media_prepare($content) {
     $blocks = parse_blocks($content);
     $changed = false;
@@ -48,7 +63,6 @@ function daniella_media_prepare($content) {
     $has_bacp = daniella_media_contains($blocks, 'ds-bacp-image');
     $walk = function (&$items) use (&$walk, &$changed, &$has_qualification, &$has_room, &$has_bacp) {
         foreach ($items as &$block) {
-            $classes = $block['attrs']['className'] ?? '';
             if (daniella_media_has_class($block, 'ds-room-slot') && !$has_room && daniella_media_empty_legacy($block, 'ds-room-slot')) {
                 $block = daniella_media_image('ds-room-image'); $has_room = true; $changed = true; continue;
             }
@@ -57,14 +71,20 @@ function daniella_media_prepare($content) {
             }
             if (!empty($block['innerBlocks'])) { $walk($block['innerBlocks']); }
             if (($block['attrs']['anchor'] ?? '') === 'qualifications' && !$has_qualification) {
-                $media = daniella_media_group('ds-qualification-media', array(
-                    daniella_media_image('ds-qualification-bacp ds-bacp-image'),
-                    daniella_media_image('ds-qualification-room ds-room-image'),
-                ));
-                // Append to the existing section. All existing copy and cards stay intact.
-                $block['innerBlocks'][] = $media;
-                $block['innerContent'][] = null;
-                $has_qualification = true; $changed = true;
+                // Keep the original two-column design. Media belongs beneath the
+                // heading/membership text in the first column, not outside the shell.
+                foreach ($block['innerBlocks'] as &$shell) {
+                    if (!daniella_media_has_class($shell, 'ds-split')) { continue; }
+                    foreach ($shell['innerBlocks'] as &$column) {
+                        if (daniella_media_append($column, daniella_media_qualification_group())) {
+                            $has_qualification = true; $changed = true;
+                        }
+                        break;
+                    }
+                    unset($column);
+                    break;
+                }
+                unset($shell);
             }
         }
         unset($block);
@@ -73,17 +93,13 @@ function daniella_media_prepare($content) {
     return $changed ? serialize_blocks($blocks) : $content;
 }
 
-/** A reusable inserter pattern for pages that do not have the slots yet. */
 add_action('init', function () {
     if (!function_exists('register_block_pattern')) { return; }
     register_block_pattern('daniella-somers/qualification-media', array(
         'title' => __('Qualifications: image placeholders', 'daniella-somers'),
         'description' => __('Replace the empty images with your genuine BACP badge and counselling room photo.', 'daniella-somers'),
         'categories' => array('media'),
-        'content' => serialize_block(daniella_media_group('ds-qualification-media', array(
-            daniella_media_image('ds-qualification-bacp ds-bacp-image'),
-            daniella_media_image('ds-qualification-room ds-room-image'),
-        ))),
+        'content' => serialize_block(daniella_media_qualification_group()),
     ));
 });
 
