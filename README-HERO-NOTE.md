@@ -1,0 +1,1 @@
+Main keeps the clean neutral editorial treatment. Option B uses a structured navy treatment. Option C uses a softer warm treatment. All three use the same locally embedded Daniella portrait from portrait.css; no external placeholder portrait is used.
