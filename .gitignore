@@ -1,4 +1,17 @@
 .DS_Store
 .env
+.env.*
+!.env.example
 *.log
+wp-config.php
+wp-config-*.php
 wp-content/uploads/
+wp-content/backup*/
+*.sql
+*.sql.gz
+*.pem
+*.key
+*.p12
+*.pfx
+auth.json
+.htpasswd
