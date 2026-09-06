@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "layout": {"contentSize":"760px","wideSize":"1160px"},
+    "color": {
+      "custom": false,
+      "palette": [
+        {"slug":"cream","name":"Cream","color":"#fff8f5"},
+        {"slug":"blush","name":"Blush","color":"#f3dde2"},
+        {"slug":"rose","name":"Rose","color":"#d58f9e"},
+        {"slug":"berry","name":"Berry","color":"#87445d"},
+        {"slug":"wine","name":"Wine","color":"#512c3a"},
+        {"slug":"ink","name":"Ink","color":"#352832"},
+        {"slug":"white","name":"White","color":"#ffffff"}
+      ]
+    },
+    "typography": {
+      "fluid": true,
+      "fontFamilies": [
+        {"slug":"serif","name":"Editorial Serif","fontFamily":"Georgia, 'Times New Roman', serif"},
+        {"slug":"sans","name":"Clean Sans","fontFamily":"Arial, Helvetica, sans-serif"}
+      ]
+    }
+  },
+  "styles": {
+    "color":{"background":"#fff8f5","text":"#352832"},
+    "typography":{"fontFamily":"var(--wp--preset--font-family--sans)","lineHeight":"1.72"},
+    "elements": {
+      "heading":{"typography":{"fontFamily":"var(--wp--preset--font-family--serif)"},"color":{"text":"#512c3a"}},
+      "button":{"border":{"radius":"999px"},"typography":{"fontSize":"0.72rem","letterSpacing":"0.12em","textTransform":"uppercase"}}
+    }
+  },
+  "templateParts": [
+    {"name":"header","title":"Header","area":"header"},
+    {"name":"footer","title":"Footer","area":"footer"}
+  ]
+}
