@@ -1,12 +1,13 @@
 {
   "name": "Daniella Sommers Counselling Demo",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
   "forwardPorts": [8080],
   "portsAttributes": {
     "8080": {
-      "label": "Counselling site preview",
-      "onAutoForward": "openBrowser"
+      "label": "Daniella public preview",
+      "onAutoForward": "openBrowser",
+      "visibility": "public"
     }
   },
-  "postStartCommand": "pkill -f 'python3 -m http.server 8080' || true; nohup python3 -m http.server 8080 --directory . > /tmp/daniella-preview.log 2>&1 &"
+  "postStartCommand": "pkill -f 'python3 -m http.server 8080' || true; nohup python3 -m http.server 8080 --bind 0.0.0.0 --directory . > /tmp/daniella-preview.log 2>&1 &"
 }
