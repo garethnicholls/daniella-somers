@@ -2,13 +2,17 @@
 
 Presentation-ready counselling website concepts plus an editable WordPress block theme for Daniella Somers.
 
-The project includes three visual directions: the original warm editorial design, Option B with sage/earth tones, and Option C with rose/pink/berry tones.
+The project includes three visual directions: Main with warm editorial neutrals, Option B with crisp navy/blue and Scandinavian-inspired structure, and Option C with a softer rose/pink/berry palette.
 
 ## Public previews
 
 - Main: `https://garethnicholls.github.io/daniella-somers/`
 - Option B: `https://garethnicholls.github.io/daniella-somers/option-b/`
 - Option C: `https://garethnicholls.github.io/daniella-somers/option-c/`
+
+## Latest design refresh
+
+All three concepts now have a polished hero area with portrait treatment, custom monogram logo, responsive navigation, clearer calls to action, tighter typography, improved spacing, and mobile-first layouts. Each option keeps the same core content structure while deliberately using a different visual language and colour palette.
 
 ## Review it in GitHub Codespaces
 
@@ -23,8 +27,9 @@ A Codespaces forwarded-port URL is a temporary review environment, not permanent
 ## What the showcase includes
 
 - Clean, responsive counselling homepage concepts
-- Professional portrait placeholder for design review
-- Three distinct colour/layout directions
+- Portrait-led hero treatment across all three directions
+- Custom Daniella Somers monogram/logo treatment
+- Three genuinely different colour/layout directions
 - About, Practice, Fees and Contact sections
 - Accessible semantic structure and clear navigation
 - WordPress-ready equivalent homepage template
@@ -33,7 +38,7 @@ A Codespaces forwarded-port URL is a temporary review environment, not permanent
 
 The photography, fee, availability, location wording and `hello@daniellasomers.co.uk` email are **concept content for review only**. Confirm Daniella's real qualifications, memberships, fees, availability, address/location, contact details and professional wording before production launch.
 
-The portrait is a generated mock professional image for design review. It should be replaced with Daniella's approved professional photography before launch.
+The portrait shown in the concepts is mock photography for design review. It should be replaced with Daniella's approved professional photography before launch.
 
 ## WordPress editing
 
