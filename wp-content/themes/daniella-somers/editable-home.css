@@ -1,5 +1,54 @@
 /* Editable Home page additions. The content lives in Pages > Home; this file only styles it. */
 
+/*
+ * The homepage used to live directly in the front-page template. Once it was moved
+ * into wp:post-content, WordPress' global content-width rules started constraining
+ * every top-level homepage section. That makes the designed full-width hero,
+ * coloured bands and contact section collapse into the normal text column.
+ *
+ * Keep the page editable, but explicitly restore the original full-width canvas.
+ * These rules also protect pages already saved in the editor, so no user content is
+ * overwritten or reset by the fix.
+ */
+.home .wp-block-post-content,
+.home .wp-block-post-content > main,
+.home .wp-block-post-content > .wp-block-group,
+.home .wp-block-post-content > main > .wp-block-group{
+  max-width:none!important;
+  width:100%!important;
+}
+.home .wp-block-post-content{
+  margin-block-start:0!important;
+  margin-block-end:0!important;
+  padding-left:0!important;
+  padding-right:0!important;
+}
+.home .wp-block-post-content > main{
+  margin:0!important;
+  padding:0!important;
+}
+.home .wp-block-post-content > main > .ds-hero,
+.home .wp-block-post-content > main > .ds-quote,
+.home .wp-block-post-content > main > .ds-section,
+.home .wp-block-post-content > main > .ds-contact,
+.home .wp-block-post-content > .ds-hero,
+.home .wp-block-post-content > .ds-quote,
+.home .wp-block-post-content > .ds-section,
+.home .wp-block-post-content > .ds-contact{
+  max-width:none!important;
+  width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  margin-block-start:0!important;
+  margin-block-end:0!important;
+}
+.home .wp-block-post-content .ds-shell{
+  max-width:var(--max)!important;
+  width:min(calc(100% - 48px),var(--max))!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
 /* Core Image blocks are deliberately used so images can be replaced from Media Library. */
 .ds-hero-editable-image,
 .ds-hero-editable-image img{width:100%!important;height:100%!important;margin:0!important}
@@ -55,7 +104,12 @@
 .editor-styles-wrapper .wp-block-post-content>.ds-hero,
 .editor-styles-wrapper .wp-block-post-content>.ds-quote,
 .editor-styles-wrapper .wp-block-post-content>.ds-section,
-.editor-styles-wrapper .wp-block-post-content>.ds-contact{max-width:none!important}
+.editor-styles-wrapper .wp-block-post-content>.ds-contact,
+.editor-styles-wrapper .wp-block-post-content>main,
+.editor-styles-wrapper .wp-block-post-content>main>.ds-hero,
+.editor-styles-wrapper .wp-block-post-content>main>.ds-quote,
+.editor-styles-wrapper .wp-block-post-content>main>.ds-section,
+.editor-styles-wrapper .wp-block-post-content>main>.ds-contact{max-width:none!important;width:100%!important}
 .editor-styles-wrapper .ds-contact-layout{grid-template-columns:minmax(0,.82fr) minmax(320px,1fr) minmax(270px,.92fr)!important}
 
 @media(max-width:1100px){
@@ -65,6 +119,7 @@
 }
 
 @media(max-width:900px){
+  .home .wp-block-post-content .ds-shell{width:min(calc(100% - 36px),var(--max))!important}
   .ds-contact-editor{padding:72px 0}
   .ds-contact-layout{grid-template-columns:1fr;gap:18px}
   .ds-contact-copy{padding-right:0}
@@ -73,6 +128,7 @@
 }
 
 @media(max-width:620px){
+  .home .wp-block-post-content .ds-shell{width:min(calc(100% - 28px),var(--max))!important}
   .ds-contact-editor{padding:64px 0}
   .ds-contact-form-card{padding:22px}
   .ds-contact-trust{grid-template-columns:1fr!important}
