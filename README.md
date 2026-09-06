@@ -1,43 +1,39 @@
-# Daniella Sommers Counselling
+# Daniella Somers Counselling
 
-Presentation-ready counselling website concept plus an editable WordPress block theme for Daniella Sommers.
+Presentation-ready counselling website concepts plus an editable WordPress block theme for Daniella Somers.
 
-The design recreates the calm editorial language of the supplied counselling reference site from scratch: sparse navigation, oversized serif typography, long-form personal copy, portrait-led imagery, generous spacing and simple About / Practice / Fees / Contact sections.
+The project includes three visual directions: the original warm editorial design, Option B with sage/earth tones, and Option C with rose/pink/berry tones.
+
+## Public previews
+
+- Main: `https://garethnicholls.github.io/daniella-somers/`
+- Option B: `https://garethnicholls.github.io/daniella-somers/option-b/`
+- Option C: `https://garethnicholls.github.io/daniella-somers/option-c/`
 
 ## Review it in GitHub Codespaces
 
 1. Open this repository in GitHub.
-2. Create a Codespace from `main` once this PR is merged.
+2. Create a Codespace from `main`.
 3. The devcontainer starts a static preview server on port `8080`.
 4. Open the **Ports** tab if the site does not open automatically.
 5. Port `8080` is configured as **Public**.
-6. Copy the forwarded-port URL and send that URL to Daniella.
 
-Daniella does **not** need a GitHub account to view the public forwarded-port link. The repository itself can stay private.
-
-Important: a Codespaces forwarded-port URL is a temporary review environment, not permanent hosting. The Codespace must be running for the link to work. It is ideal for design/content approval before paying for hosting or a domain.
-
-If GitHub overrides the requested visibility, use the Ports tab, right-click port `8080`, choose **Port Visibility → Public**, then copy the public URL.
+A Codespaces forwarded-port URL is a temporary review environment, not permanent hosting. The Codespace must be running for the link to work. GitHub Pages is used for the public previews above.
 
 ## What the showcase includes
 
-- Complete curated counselling copy rather than lorem ipsum
-- Editorial mock portrait and interior imagery
-- Responsive desktop/mobile layout
-- About me, approach, session format, fees and contact journey
-- Mock £60 session fee and introductory-call proposition
+- Clean, responsive counselling homepage concepts
+- Professional portrait placeholder for design review
+- Three distinct colour/layout directions
+- About, Practice, Fees and Contact sections
 - Accessible semantic structure and clear navigation
 - WordPress-ready equivalent homepage template
 
 ## Important demo-content note
 
-The photography, fee, availability, location wording and `hello@daniellasommers.co.uk` email are **concept content for review only**. Confirm Daniella's real qualifications, memberships, fees, availability, address/location, contact details and professional wording before production launch.
+The photography, fee, availability, location wording and `hello@daniellasomers.co.uk` email are **concept content for review only**. Confirm Daniella's real qualifications, memberships, fees, availability, address/location, contact details and professional wording before production launch.
 
-Mock visual sources currently used for art direction:
-- Portrait: Unsplash, free image by yan kolesnyk (`Xwk7fYSA7cQ`).
-- Interior: remote Unsplash image (`photo-1494438639946-1ebd1d20bf85`).
-
-These should ideally be replaced with Daniella's own commissioned photography before production launch.
+The portrait is a generated mock professional image for design review. It should be replaced with Daniella's approved professional photography before launch.
 
 ## WordPress editing
 
@@ -53,7 +49,7 @@ It is a native block theme designed for the WordPress Site Editor, allowing the 
 2. Run `docker compose up -d`.
 3. Open `http://localhost:8080`.
 4. Complete WordPress setup.
-5. Activate **Daniella Sommers Counselling** under **Appearance → Themes**.
+5. Activate **Daniella Somers Counselling** under **Appearance → Themes**.
 6. Edit through **Appearance → Editor**.
 
 When using Docker WordPress locally, stop the simple Codespaces/static preview first if both are trying to use port 8080.
