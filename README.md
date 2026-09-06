@@ -29,7 +29,11 @@ The Codespaces preview serves `demo/index.html` and does not require WordPress, 
 
 The photography, fee, availability, location wording and `hello@daniellasommers.co.uk` email are **concept content for review only**. Confirm Daniella's real qualifications, memberships, fees, availability, address/location, contact details and professional wording before production launch.
 
-The portrait used in the concept is a free Unsplash photograph and the interior is a remote Unsplash image. These are intended as temporary art direction. Replace them with Daniella's own commissioned photography before launch where possible.
+Mock visual sources currently used for art direction:
+- Portrait: Unsplash, free image by yan kolesnyk (`Xwk7fYSA7cQ`).
+- Interior: remote Unsplash image (`photo-1494438639946-1ebd1d20bf85`).
+
+These should ideally be replaced with Daniella's own commissioned photography before production launch.
 
 ## WordPress editing
 
