@@ -32,6 +32,45 @@ function daniella_get_default_home_content() {
     return (string) file_get_contents($path);
 }
 
+/**
+ * Repair the first editable-home seed produced by PR #17.
+ *
+ * That version placed raw HTML shell divs inside core/group blocks. The public page
+ * rendered, but Gutenberg treated parts of the page as malformed/invalid blocks.
+ * These replacements change only those wrapper elements and keep edited copy, links,
+ * images and shortcode content intact.
+ */
+function daniella_repair_legacy_home_blocks($content) {
+    $content = (string) $content;
+
+    $replacements = array(
+        '<div class="wp-block-group ds-quote"><div class="ds-shell">' => '<div class="wp-block-group ds-quote">\n<!-- wp:group {"className":"ds-shell","layout":{"type":"default"}} --><div class="wp-block-group ds-shell">',
+        '<div id="about" class="wp-block-group ds-section"><div class="ds-shell ds-split">' => '<div id="about" class="wp-block-group ds-section">\n<!-- wp:group {"className":"ds-shell ds-split","layout":{"type":"default"}} --><div class="wp-block-group ds-shell ds-split">',
+        '<div id="practice" class="wp-block-group ds-section ds-soft"><div class="ds-shell">' => '<div id="practice" class="wp-block-group ds-section ds-soft">\n<!-- wp:group {"className":"ds-shell","layout":{"type":"default"}} --><div class="wp-block-group ds-shell">',
+        '<div id="qualifications" class="wp-block-group ds-section ds-credentials"><div class="ds-shell ds-split">' => '<div id="qualifications" class="wp-block-group ds-section ds-credentials">\n<!-- wp:group {"className":"ds-shell ds-split","layout":{"type":"default"}} --><div class="wp-block-group ds-shell ds-split">',
+        '<div id="fees" class="wp-block-group ds-section ds-fees"><div class="ds-shell ds-split">' => '<div id="fees" class="wp-block-group ds-section ds-fees">\n<!-- wp:group {"className":"ds-shell ds-split","layout":{"type":"default"}} --><div class="wp-block-group ds-shell ds-split">',
+        '<div id="contact" class="wp-block-group ds-contact ds-contact-editor"><div class="ds-shell">' => '<div id="contact" class="wp-block-group ds-contact ds-contact-editor">\n<!-- wp:group {"className":"ds-shell","layout":{"type":"default"}} --><div class="wp-block-group ds-shell">',
+    );
+
+    $had_legacy_shell = false;
+    foreach ($replacements as $legacy => $valid) {
+        if (strpos($content, $legacy) !== false) {
+            $had_legacy_shell = true;
+            $content = str_replace($legacy, $valid, $content);
+        }
+    }
+
+    if ($had_legacy_shell) {
+        $content = str_replace(
+            '</div></div><!-- /wp:group -->',
+            '</div><!-- /wp:group -->\n</div><!-- /wp:group -->',
+            $content
+        );
+    }
+
+    return $content;
+}
+
 add_action('init', function () {
     $bootstrap_key = 'daniella_editable_home_bootstrap_20260906_v1';
     if (get_option($bootstrap_key)) {
@@ -91,6 +130,36 @@ add_action('init', function () {
     update_option($bootstrap_key, gmdate('c'), false);
 }, 120);
 
+/** Repair already-seeded PR #17 Home content without overwriting user edits. */
+add_action('init', function () {
+    $repair_key = 'daniella_editable_home_block_repair_20260906_v2';
+    if (get_option($repair_key)) {
+        return;
+    }
+
+    $front_page_id = (int) get_option('page_on_front');
+    if ($front_page_id <= 0) {
+        return;
+    }
+
+    $front_page = get_post($front_page_id);
+    if (!$front_page || $front_page->post_type !== 'page') {
+        return;
+    }
+
+    $original = (string) $front_page->post_content;
+    $repaired = daniella_repair_legacy_home_blocks($original);
+
+    if ($repaired !== $original) {
+        wp_update_post(array(
+            'ID'           => $front_page_id,
+            'post_content' => $repaired,
+        ));
+    }
+
+    update_option($repair_key, gmdate('c'), false);
+}, 130);
+
 add_action('admin_notices', function () {
     if (!current_user_can('edit_pages')) {
         return;
@@ -111,5 +180,5 @@ add_action('admin_notices', function () {
         return;
     }
 
-    echo '<div class="notice notice-info is-dismissible"><p><strong>Daniella Somers homepage:</strong> the homepage is now editable in the visual block editor. <a href="' . esc_url($edit_url) . '">Edit Home page</a>.</p></div>';
+    echo '<div class="notice notice-info is-dismissible"><p><strong>Daniella Somers homepage:</strong> the homepage is editable in the visual block editor. <a href="' . esc_url($edit_url) . '">Edit Home page</a>.</p></div>';
 });
