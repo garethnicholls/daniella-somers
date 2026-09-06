@@ -1,0 +1,1 @@
+Hero image is stored as assets/daniella-hero.jpg and should use Daniella's supplied professional portrait.
