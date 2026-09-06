@@ -1,21 +1,19 @@
-<!-- wp:group {"className":"ds-header","layout":{"type":"constrained"}} -->
-<div class="wp-block-group ds-header">
-  <!-- wp:group {"className":"ds-shell ds-header-inner","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
-  <div class="wp-block-group ds-shell ds-header-inner">
-    <!-- wp:html -->
-    <a class="ds-brand" href="/" aria-label="Daniella Somers home">
+<!-- wp:html -->
+<div class="ds-header">
+  <header class="ds-shell ds-header-inner">
+    <a class="ds-brand" href="/#top" aria-label="Daniella Somers home">
       <svg class="ds-logo" viewBox="0 0 47 47" fill="none" aria-hidden="true"><circle cx="23.5" cy="23.5" r="22" stroke="currentColor"/><path d="M15.5 31V16h6c5 0 8 2.8 8 7.5s-3 7.5-8 7.5h-6Z" stroke="currentColor"/><path d="M18.5 19h3c3 0 4.8 1.6 4.8 4.5S24.5 28 21.5 28h-3" stroke="currentColor"/></svg>
       <span class="ds-brand-copy"><span class="ds-brand-name">Daniella Somers</span><span class="ds-brand-sub">Counselling &amp; Psychotherapy · MBACP</span></span>
     </a>
-    <!-- /wp:html -->
-    <!-- wp:navigation {"overlayMenu":"mobile","layout":{"type":"flex","justifyContent":"right"}} -->
-      <!-- wp:navigation-link {"label":"About","url":"#about"} /-->
-      <!-- wp:navigation-link {"label":"How I practice","url":"#practice"} /-->
-      <!-- wp:navigation-link {"label":"Qualifications","url":"#qualifications"} /-->
-      <!-- wp:navigation-link {"label":"Fees","url":"#fees"} /-->
-      <!-- wp:navigation-link {"label":"Contact","url":"#contact"} /-->
-    <!-- /wp:navigation -->
-  </div>
-  <!-- /wp:group -->
+    <nav class="ds-desktop-nav" aria-label="Primary navigation">
+      <a href="/#about">About</a><a href="/#practice">How I practice</a><a href="/#qualifications">Qualifications</a><a href="/#fees">Fees</a><a href="/#contact">Contact</a>
+    </nav>
+    <details class="ds-menu">
+      <summary>Menu</summary>
+      <nav aria-label="Mobile navigation">
+        <a href="/#about">About</a><a href="/#practice">How I practice</a><a href="/#qualifications">Qualifications</a><a href="/#fees">Fees</a><a href="/#contact">Contact</a>
+      </nav>
+    </details>
+  </header>
 </div>
-<!-- /wp:group -->
+<!-- /wp:html -->
