@@ -1,0 +1,15 @@
+/*
+Theme Name: Daniella Somers Counselling
+Theme URI: https://github.com/garethnicholls/daniella-somers
+Author: Gareth Nicholls
+Description: Editable WordPress block theme based on the selected Daniella Somers main design.
+Version: 1.0.0
+Requires at least: 6.6
+Requires PHP: 8.1
+Text Domain: daniella-somers
+*/
+
+:root{--cream:#fff8f5;--blush:#f3dde2;--rose:#d58f9e;--berry:#87445d;--wine:#512c3a;--ink:#352832;--muted:#76666d;--line:rgba(81,44,58,.15)}
+html{scroll-behavior:smooth;scroll-padding-top:92px}body{background:var(--cream);color:var(--ink)}a{text-underline-offset:4px}.ds-shell{width:min(calc(100% - 36px),1160px);margin-inline:auto}.ds-header{position:sticky;top:0;z-index:50;background:rgba(255,248,245,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}.ds-hero{padding:68px 0 88px}.ds-hero-grid{display:grid;grid-template-columns:1fr .88fr;gap:clamp(48px,7vw,96px);align-items:center}.ds-kicker{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--berry)}.ds-display{font-family:Georgia,serif;font-size:clamp(4rem,9vw,7.6rem);line-height:.84;letter-spacing:-.065em;color:var(--wine)}.ds-intro{font-family:Georgia,serif;font-size:clamp(1.45rem,2.5vw,2.2rem);line-height:1.25}.ds-muted{color:var(--muted)}.ds-portrait{min-height:580px;background:var(--blush);border-radius:48% 48% 26px 26px;overflow:hidden;box-shadow:0 26px 65px rgba(81,44,58,.16)}.ds-portrait img{width:100%;height:100%;min-height:580px;object-fit:cover;object-position:center 12%}.ds-quote{background:var(--wine);color:#fff0f1;padding:80px 0}.ds-quote p{font-family:Georgia,serif;font-size:clamp(2rem,4.6vw,3.9rem);line-height:1.06;letter-spacing:-.04em}.ds-section{padding:96px 0}.ds-section-title{font-family:Georgia,serif;font-size:clamp(2.6rem,6vw,4.6rem);line-height:.96;letter-spacing:-.055em;color:var(--wine)}.ds-split{display:grid;grid-template-columns:.7fr 1.3fr;gap:clamp(42px,7vw,86px)}.ds-soft{background:var(--blush)}.ds-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.ds-card{background:rgba(255,255,255,.76);border:1px solid var(--line);padding:28px;border-radius:20px}.ds-card h3{font-family:Georgia,serif;color:var(--wine)}.ds-pill{display:inline-flex;padding:10px 14px;border:1px solid var(--line);border-radius:999px;color:var(--berry);background:#fff}.ds-fee strong{display:block;font-family:Georgia,serif;font-size:2rem;color:var(--berry)}.ds-contact{background:var(--rose);color:#fff;padding:90px 0}.ds-contact h2{color:#fff}.ds-contact a{color:#fff}.wp-block-button__link{transition:transform .2s}.wp-block-button__link:hover{transform:translateY(-2px)}
+@media(max-width:900px){.ds-hero-grid,.ds-split,.ds-card-grid{grid-template-columns:1fr}.ds-hero{padding:54px 0 70px}.ds-portrait,.ds-portrait img{min-height:70vw;max-height:680px}.ds-section{padding:74px 0}.ds-quote{padding:64px 0}}
+@media(max-width:480px){.ds-shell{width:min(calc(100% - 24px),1160px)}.ds-display{font-size:clamp(3.4rem,17vw,6rem)}.ds-card{padding:22px}}
