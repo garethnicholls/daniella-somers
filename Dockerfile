@@ -5,6 +5,16 @@ RUN set -eux; \
     apt-get install -y --no-install-recommends nginx curl unzip; \
     rm -rf /var/lib/apt/lists/* /etc/nginx/sites-enabled/default
 
+# WordPress media uploads: allow reasonably sized source images while keeping
+# request limits conservative for this small production site.
+RUN printf '%s\n' \
+    'file_uploads = On' \
+    'upload_max_filesize = 16M' \
+    'post_max_size = 20M' \
+    'memory_limit = 256M' \
+    'max_execution_time = 120' \
+    > /usr/local/etc/php/conf.d/wordpress-uploads.ini
+
 COPY railway/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Ship the approved Daniella Somers theme, including the final hero portrait.
