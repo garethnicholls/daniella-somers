@@ -4,16 +4,20 @@ Presentation-ready counselling website concept plus an editable WordPress block 
 
 The design recreates the calm editorial language of the supplied counselling reference site from scratch: sparse navigation, oversized serif typography, long-form personal copy, portrait-led imagery, generous spacing and simple About / Practice / Fees / Contact sections.
 
-## Fastest way to review it: GitHub Codespaces
+## Review it in GitHub Codespaces
 
 1. Open this repository in GitHub.
-2. Switch to the `feature/wordpress-site-foundation` branch while PR #1 is still open.
-3. Click **Code → Codespaces → Create codespace on feature/wordpress-site-foundation**.
-4. Wait for the container to start.
-5. Port **8080** is forwarded automatically and should open a browser preview.
-6. If it does not open automatically, use the **Ports** tab and click the globe/open-browser icon for port `8080`.
+2. Create a Codespace from `main` once this PR is merged.
+3. The devcontainer starts a static preview server on port `8080`.
+4. Open the **Ports** tab if the site does not open automatically.
+5. Port `8080` is configured as **Public**.
+6. Copy the forwarded-port URL and send that URL to Daniella.
 
-The Codespaces preview serves `demo/index.html` and does not require WordPress, a domain, hosting, a database or any paid service.
+Daniella does **not** need a GitHub account to view the public forwarded-port link. The repository itself can stay private.
+
+Important: a Codespaces forwarded-port URL is a temporary review environment, not permanent hosting. The Codespace must be running for the link to work. It is ideal for design/content approval before paying for hosting or a domain.
+
+If GitHub overrides the requested visibility, use the Ports tab, right-click port `8080`, choose **Port Visibility → Public**, then copy the public URL.
 
 ## What the showcase includes
 
