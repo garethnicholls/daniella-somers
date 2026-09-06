@@ -29,7 +29,7 @@ jobs:
         run: |
           mkdir -p dist
           cd wp-content/themes
-          zip -r ../../../dist/daniella-somers.zip daniella-somers \
+          zip -r ../../dist/daniella-somers.zip daniella-somers \
             -x '*/.DS_Store' '*.log' '*.env' '.env*'
 
       - name: Upload theme artifact
