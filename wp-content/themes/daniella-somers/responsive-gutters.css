@@ -33,6 +33,9 @@
 .editor-styles-wrapper .wp-block-post-content :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust) > .wp-block-group{
   max-width:none!important;min-width:0!important;margin-left:0!important;margin-right:0!important;
 }
+/* A grid can itself be the shell: keep its original content maximum. */
+.home .wp-block-post-content .ds-shell:is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust),
+.editor-styles-wrapper .wp-block-post-content .ds-shell:is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust){max-width:var(--max)!important;margin-left:auto!important;margin-right:auto!important}
 
 .home .wp-block-post-content .ds-hero-grid,
 .editor-styles-wrapper .wp-block-post-content .ds-hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,.88fr)!important;gap:clamp(32px,5vw,80px)!important}
