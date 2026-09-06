@@ -7,9 +7,15 @@ RUN set -eux; \
 
 COPY railway/nginx.conf /etc/nginx/conf.d/default.conf
 
-# Ship the approved Daniella Somers theme and portrait with WordPress.
+# Ship the approved Daniella Somers theme with WordPress.
 COPY wp-content/themes/daniella-somers /usr/src/wordpress/wp-content/themes/daniella-somers
-COPY assets/daniella-hero.jpg /usr/src/wordpress/wp-content/themes/daniella-somers/assets/daniella-hero.jpg
+
+# Rebuild the final supplied hero portrait from repository-safe text chunks.
+RUN set -eux; \
+    cat /usr/src/wordpress/wp-content/themes/daniella-somers/assets/hero-b64/part-*.txt \
+      | base64 -d \
+      > /usr/src/wordpress/wp-content/themes/daniella-somers/assets/daniella-hero.jpg; \
+    rm -rf /usr/src/wordpress/wp-content/themes/daniella-somers/assets/hero-b64
 
 # Bundle the small production plugin set so clean Railway deploys do not lose it.
 RUN set -eux; \
