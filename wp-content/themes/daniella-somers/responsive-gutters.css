@@ -1,0 +1,61 @@
+/* Responsive page gutters and device-safe spacing.
+ * Loaded last so WordPress/Gutenberg width rules cannot pull the approved design
+ * against the viewport edge. Full-width section backgrounds remain full width;
+ * only their inner .ds-shell content receives breathing room.
+ */
+:root{--ds-page-gutter:clamp(28px,4vw,48px)}
+
+.ds-shell,
+.home .wp-block-post-content .ds-shell{
+  width:100%!important;
+  max-width:calc(var(--max) + 96px)!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  padding-left:var(--ds-page-gutter)!important;
+  padding-right:var(--ds-page-gutter)!important;
+}
+
+/* These elements also carry .ds-shell but earlier theme rules use padding shorthands. */
+.ds-header-inner.ds-shell,
+.ds-hero-grid.ds-shell{
+  padding-left:var(--ds-page-gutter)!important;
+  padding-right:var(--ds-page-gutter)!important;
+}
+
+/* Prevent editable media and form cards from ever pushing beyond the padded canvas. */
+.ds-hero-editable-image,
+.ds-room-image,
+.ds-bacp-image,
+.ds-contact-photo-card,
+.ds-contact-form-card,
+.ds-trust-card{
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+/* Large tablets / small laptops. */
+@media(max-width:1100px){
+  :root{--ds-page-gutter:clamp(30px,4vw,40px)}
+}
+
+/* Tablets: retain comfortable side space even after the design stacks. */
+@media(max-width:900px){
+  :root{--ds-page-gutter:30px}
+  .ds-hero-grid{padding-top:54px!important;padding-bottom:70px!important}
+  .ds-contact-layout,.ds-split{min-width:0}
+}
+
+/* Phones. */
+@media(max-width:620px){
+  :root{--ds-page-gutter:24px}
+  .ds-section{padding-top:60px!important;padding-bottom:60px!important}
+  .ds-quote{padding-top:52px!important;padding-bottom:52px!important}
+  .ds-contact-editor,.ds-contact{padding-top:60px!important;padding-bottom:64px!important}
+  .ds-contact-form-card{padding:22px!important}
+}
+
+/* Very narrow phones and split-screen browser widths. */
+@media(max-width:380px){
+  :root{--ds-page-gutter:18px}
+  .ds-contact-form-card{padding:18px!important}
+}
