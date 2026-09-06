@@ -40,10 +40,9 @@ function daniella_media_empty_legacy($block, $class) {
 
 /** Insert a child before the closing wrapper, without rewriting existing children. */
 function daniella_media_append(&$block, $child) {
-    if (!isset($block['innerBlocks'], $block['innerContent'])) { return false; }
+    if (!isset($block['innerBlocks'], $block['innerContent']) || !$block['innerContent']) { return false; }
     $block['innerBlocks'][] = $child;
-    $position = count($block['innerContent']) - 1;
-    array_splice($block['innerContent'], $position, 0, array(null));
+    array_splice($block['innerContent'], count($block['innerContent']) - 1, 0, array(null));
     return true;
 }
 
@@ -52,6 +51,22 @@ function daniella_media_qualification_group() {
         daniella_media_image('ds-qualification-bacp ds-bacp-image'),
         daniella_media_image('ds-qualification-room ds-room-image'),
     ));
+}
+
+/** Find the actual heading group, regardless of raw or native layout wrappers. */
+function daniella_media_insert_in_heading(&$blocks, $media) {
+    foreach ($blocks as &$block) {
+        if ($block['blockName'] === 'core/group') {
+            foreach ($block['innerBlocks'] ?? array() as $child) {
+                if (daniella_media_has_class($child, 'ds-pill')) {
+                    return daniella_media_append($block, $media);
+                }
+            }
+        }
+        if (!empty($block['innerBlocks']) && daniella_media_insert_in_heading($block['innerBlocks'], $media)) { return true; }
+    }
+    unset($block);
+    return false;
 }
 
 /** Only transform known empty placeholders. Existing images and custom blocks are untouched. */
@@ -71,20 +86,9 @@ function daniella_media_prepare($content) {
             }
             if (!empty($block['innerBlocks'])) { $walk($block['innerBlocks']); }
             if (($block['attrs']['anchor'] ?? '') === 'qualifications' && !$has_qualification) {
-                // Keep the original two-column design. Media belongs beneath the
-                // heading/membership text in the first column, not outside the shell.
-                foreach ($block['innerBlocks'] as &$shell) {
-                    if (!daniella_media_has_class($shell, 'ds-split')) { continue; }
-                    foreach ($shell['innerBlocks'] as &$column) {
-                        if (daniella_media_append($column, daniella_media_qualification_group())) {
-                            $has_qualification = true; $changed = true;
-                        }
-                        break;
-                    }
-                    unset($column);
-                    break;
+                if (daniella_media_insert_in_heading($block['innerBlocks'], daniella_media_qualification_group())) {
+                    $has_qualification = true; $changed = true;
                 }
-                unset($shell);
             }
         }
         unset($block);
