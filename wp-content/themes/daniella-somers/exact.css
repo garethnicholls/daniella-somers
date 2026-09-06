@@ -12,5 +12,25 @@
 .ds-portrait-placeholder p{display:none!important}
 .ds-nameplate{position:relative;z-index:2}
 .wp-block-navigation{display:none!important}
-@media(max-width:900px){.ds-desktop-nav{display:none}.ds-menu{display:block}.ds-header-inner{min-height:82px}.ds-portrait-placeholder{min-height:100%!important;background-position:center 10%!important}}
-@media(max-width:480px){.ds-menu summary{padding:9px 12px}}
+
+/* Practice cards: lock the same geometry as the approved static design. */
+#practice .ds-card-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important;margin-top:42px!important;align-items:stretch!important}
+#practice .ds-card-grid>.wp-block-group{display:flex!important;min-width:0!important;height:auto!important}
+#practice .ds-card{flex:1 1 auto!important;min-height:340px!important;height:100%!important;padding:28px!important;border-radius:20px!important;display:flex!important;flex-direction:column!important;align-items:stretch!important}
+#practice .ds-card-num{margin:0!important;font:italic 22px/1.2 Georgia,serif!important}
+#practice .ds-card h3{margin:42px 0 10px!important;font:400 28px/1.1 Georgia,serif!important}
+#practice .ds-card p{margin:0!important;font-size:16px!important;line-height:1.72!important;max-width:none!important}
+
+/* The Site Editor canvas is narrower than the public browser viewport. Keep its
+   desktop preview gutters visually identical to the approved 1280px reference. */
+@media(min-width:901px){
+  .editor-styles-wrapper .ds-shell{width:min(calc(100% - 120px),var(--max))!important}
+}
+
+@media(max-width:900px){
+  .ds-desktop-nav{display:none}.ds-menu{display:block}.ds-header-inner{min-height:82px}.ds-portrait-placeholder{min-height:100%!important;background-position:center 10%!important}
+  #practice .ds-card-grid{grid-template-columns:1fr!important}
+  #practice .ds-card-grid>.wp-block-group{height:auto!important}
+  #practice .ds-card{min-height:0!important;height:auto!important}
+}
+@media(max-width:480px){.ds-menu summary{padding:9px 12px}#practice .ds-card{padding:22px!important}#practice .ds-card h3{margin-top:34px!important;font-size:25px!important}}
