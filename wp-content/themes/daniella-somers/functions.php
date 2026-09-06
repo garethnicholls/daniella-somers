@@ -191,3 +191,5 @@ add_action('save_post', function ($post_id, $post, $update) {
         daniella_indexnow_submit(array($url));
     }
 }, 20, 3);
+
+require_once get_theme_file_path('inc/editable-home.php');
