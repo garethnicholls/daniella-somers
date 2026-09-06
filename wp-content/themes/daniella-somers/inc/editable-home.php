@@ -38,7 +38,8 @@ function daniella_get_default_home_content() {
         return '';
     }
 
-    return (string) file_get_contents($path);
+    // Only new/empty homepages receive these native image placeholders.
+    return daniella_media_prepare((string) file_get_contents($path));
 }
 
 add_action('init', function () {
