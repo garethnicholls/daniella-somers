@@ -28,10 +28,11 @@ jobs:
       - name: Prepare public site
         run: |
           rm -rf _site
-          mkdir -p _site/option-b _site/option-c
+          mkdir -p _site/assets _site/option-b _site/option-c
           cp index.html _site/index.html
           cp option-b/index.html _site/option-b/index.html
           cp option-c/index.html _site/option-c/index.html
+          cp portrait.css _site/portrait.css
           find _site -type f -exec sed -i 's/Daniella Sommers/Daniella Somers/g; s/daniellasommers/daniellasomers/g' {} +
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
