@@ -1,13 +1,12 @@
 {
-  "name": "Daniella Sommers Counselling Demo",
+  "name": "Daniella Somers Counselling Demo",
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
   "forwardPorts": [8080],
   "portsAttributes": {
     "8080": {
-      "label": "Daniella public preview",
-      "onAutoForward": "openBrowser",
-      "visibility": "public"
+      "label": "Daniella counselling demo",
+      "onAutoForward": "openBrowser"
     }
   },
-  "postStartCommand": "pkill -f 'python3 -m http.server 8080' || true; nohup python3 -m http.server 8080 --bind 0.0.0.0 --directory . > /tmp/daniella-preview.log 2>&1 &"
+  "postStartCommand": "nohup python3 -m http.server 8080 --bind 0.0.0.0 > /tmp/daniella-preview.log 2>&1 </dev/null & echo 'Daniella demo starting on http://localhost:8080'"
 }
