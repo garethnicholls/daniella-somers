@@ -193,3 +193,10 @@ add_action('save_post', function ($post_id, $post, $update) {
 }, 20, 3);
 
 require_once get_theme_file_path('inc/editable-home.php');
+require_once get_theme_file_path('inc/home-media.php');
+
+add_action('wp_enqueue_scripts', function () {
+    $path = get_theme_file_path('home-media.css');
+    wp_enqueue_style('daniella-somers-home-media', get_theme_file_uri('home-media.css'), array('daniella-somers-responsive-gutters'), file_exists($path) ? (string) filemtime($path) : wp_get_theme()->get('Version'));
+}, 21);
+add_action('after_setup_theme', function () { add_editor_style('home-media.css'); });
