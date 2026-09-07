@@ -2,10 +2,11 @@ name: Homepage layout
 on:
   pull_request:
     paths:
+      - 'Dockerfile'
+      - 'railway/**'
       - 'wp-content/themes/daniella-somers/**'
       - 'wp-content/mu-plugins/**'
-      - 'tests/homepage-layout*'
-      - 'tests/live-homepage.spec.cjs'
+      - 'tests/**'
       - '.github/workflows/homepage-layout.yml'
   workflow_dispatch:
 jobs:
@@ -21,6 +22,13 @@ jobs:
         run: npm install --no-save --no-package-lock playwright@1.58.2
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
+      - name: Check shell syntax
+        run: sh -n railway/start-wordpress.sh
+      - name: Check PHP syntax
+        run: |
+          docker run --rm -v "$PWD/wp-content/themes/daniella-somers:/theme:ro" wordpress:php8.3-fpm sh -c 'find /theme -name "*.php" -type f -exec php -l {} \;'
+      - name: Test storage and native media contracts
+        run: node --test tests/wordpress-storage.spec.cjs tests/home-media.spec.cjs
       - name: Test responsive homepage layout
         run: node --test tests/homepage-layout.spec.cjs
       - name: Test real homepage with proposed styles
