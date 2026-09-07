@@ -1,10 +1,13 @@
 <?php
 /** Editable homepage bootstrap. Existing editor content is authoritative. */
 if (!defined('ABSPATH')) { exit; }
+require_once get_theme_file_path('inc/home-media.php');
 
 function daniella_get_default_home_content() {
     $path = get_theme_file_path('content/home-page.html');
-    return is_readable($path) ? (string) file_get_contents($path) : '';
+    if (!is_readable($path)) { return ''; }
+    // Prepare native Image blocks only for a new/empty page, not saved content.
+    return daniella_media_prepare((string) file_get_contents($path));
 }
 
 /**
