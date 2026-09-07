@@ -25,6 +25,7 @@ test('homepage keeps its full-width bands and responsive inner layout', async ()
       assert.equal(report.split.columns, width <= 900 ? 1 : 2, `journey grid: ${details}`);
       assert.equal(report.hero.columns, width <= 900 ? 1 : 2, `hero grid: ${details}`);
       assert.equal(report.cards.columns, width <= 900 ? 1 : 3, `practice cards: ${details}`);
+      if (width > 900) assert.ok(Math.max(...report.cardTops) - Math.min(...report.cardTops) < 1, `card tops are not aligned: ${details}`);
       assert.equal(report.contact.columns, width <= 900 ? 1 : width < 1280 ? 2 : 3, `contact grid: ${details}`);
       await page.close();
     }
