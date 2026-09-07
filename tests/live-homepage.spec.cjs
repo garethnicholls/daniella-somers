@@ -97,7 +97,8 @@ test('homepage markup with proposed CSS preserves layout and images', async () =
           };
           const section = document.querySelector('#about');
           const images = [...document.querySelectorAll('main img')].map(img => ({ src: img.currentSrc || img.src, alt: img.alt, complete: img.complete, width: img.naturalWidth, height: img.naturalHeight }));
-          return { document: document.documentElement.scrollWidth, viewport: innerWidth, section: box(section), shell: box(section?.querySelector('.ds-shell')), hero: box(document.querySelector('.ds-hero-grid')), split: box(document.querySelector('#about .ds-split')), cards: box(document.querySelector('#practice .ds-card-grid')), contact: box(document.querySelector('.ds-contact-layout')), images };
+          const feeTops = [...document.querySelectorAll('#fees .ds-card-grid>.wp-block-group')].map(card => card.getBoundingClientRect().top);
+          return { document: document.documentElement.scrollWidth, viewport: innerWidth, section: box(section), shell: box(section?.querySelector('.ds-shell')), hero: box(document.querySelector('.ds-hero-grid')), split: box(document.querySelector('#about .ds-split')), cards: box(document.querySelector('#practice .ds-card-grid')), contact: box(document.querySelector('.ds-contact-layout')), feeTops, images };
         });
         console.log(`${width}px: ${JSON.stringify(report)}`);
         assert.ok(report.section && report.shell, 'Missing original homepage sections');
@@ -108,6 +109,7 @@ test('homepage markup with proposed CSS preserves layout and images', async () =
         assert.equal(report.hero.columns, width <= 900 ? 1 : 2, 'Hero layout');
         assert.equal(report.cards.columns, width <= 900 ? 1 : 3, 'Practice cards');
         assert.equal(report.contact.columns, width <= 900 ? 1 : width < 1280 ? 2 : 3, 'Contact layout');
+        if (width > 900) assert.ok(Math.max(...report.feeTops) - Math.min(...report.feeTops) < 1, 'Fee card tops are not aligned');
         assert.ok(report.images.length > 0, 'No homepage images found');
         const broken = report.images.filter(image => image.complete && image.width === 0);
         assert.deepEqual(broken, [], 'Broken image URLs');
