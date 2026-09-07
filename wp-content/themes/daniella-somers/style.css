@@ -12,6 +12,7 @@ Text Domain: daniella-somers
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:90px;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.72 Arial,sans-serif}
+html,body{overflow-x:clip}
 img,svg,video,canvas{max-width:100%}
 body>.wp-site-blocks{padding:0}
 .wp-site-blocks>*{margin-block-start:0}
