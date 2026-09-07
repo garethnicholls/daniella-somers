@@ -1,32 +1,35 @@
 # Daniella Somers Counselling
 
-The production website for [daniellasomerscounselling.co.uk](https://daniellasomerscounselling.co.uk/).
+The approved design is previewed at [garethnicholls.github.io/daniella-somers](https://garethnicholls.github.io/daniella-somers/) and deployed through GitHub Pages with `daniellasomerscounselling.co.uk` as its custom domain.
 
-The site is one self-contained, responsive front page published by GitHub Pages. [`index.html`](index.html) is the authoritative source; there is no WordPress theme, Customizer layer, alternative design, or runtime build that can override it.
+The same design is supplied as the installable **Daniella Somers Counselling** WordPress block theme in `wp-content/themes/daniella-somers/`.
 
-## Publishing
+## Authoritative layout
 
-Every push to `main` runs [the Pages workflow](.github/workflows/pages.yml). It packages only:
+- `index.html` is the exact visual reference published by GitHub Pages.
+- `wp-content/themes/daniella-somers/content/home-page.html` contains the equivalent native WordPress blocks.
+- `wp-content/themes/daniella-somers/style.css` is the theme’s only stylesheet and is loaded in both the public site and block editor.
+- `templates/front-page.html` renders the selected WordPress front page at full width without adding another layout layer.
+
+Keeping a single theme stylesheet prevents `exact.css`, editor CSS, gutter CSS and media CSS from overriding one another. The responsive browser tests verify the same geometry in the public WordPress view and native editor.
+
+## GitHub Pages
+
+Every push to `main` runs `.github/workflows/pages.yml`. The published artifact contains only:
 
 - `index.html`
 - `assets/daniella-hero.jpg`
 - `CNAME`
 - `.nojekyll`
 
-GitHub Pages then serves the artifact at the custom domain. Changes should be made through a pull request and merged only after the production front-page check passes.
+## WordPress theme package
 
-## Local preview
+Every theme change on `main` runs `.github/workflows/package-wordpress-theme.yml`, which produces `daniella-somers.zip` as a downloadable workflow artifact.
 
-Run:
+To preview locally, run:
 
 ```sh
 python3 -m http.server 8080
 ```
 
 Then open `http://localhost:8080/`.
-
-In GitHub Codespaces the devcontainer starts the same static preview automatically and forwards port `8080`.
-
-## Content ownership
-
-All public copy, layout, responsive styles, navigation and contact behaviour live in `index.html`. The portrait lives at `assets/daniella-hero.jpg`. This keeps the reviewed front page identical to the Pages deployment and prevents theme or editor customizations from changing production unexpectedly.
