@@ -1,36 +1,29 @@
-/* Exact visual overrides for the approved GitHub Pages design. */
-.ds-header{position:sticky;top:0;z-index:50;background:rgba(255,248,245,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-.ds-header-inner{min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0!important}
-.ds-desktop-nav{display:flex;gap:24px;align-items:center}
-.ds-desktop-nav a,.ds-menu nav a{font-size:9px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--wine)}
-.ds-desktop-nav a:hover,.ds-menu nav a:hover{text-decoration:underline;text-underline-offset:5px}
+/* Approved visual details only. Responsive layout belongs to responsive-gutters.css. */
 .ds-menu{display:none;position:relative}
 .ds-menu summary{list-style:none;cursor:pointer;border:1px solid var(--line);border-radius:999px;padding:9px 13px;font-size:9px;text-transform:uppercase;letter-spacing:.15em;color:var(--wine)}
 .ds-menu summary::-webkit-details-marker{display:none}
 .ds-menu nav{display:grid;position:absolute;right:0;top:44px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;gap:14px;min-width:190px;box-shadow:0 16px 40px rgba(81,44,58,.12)}
-.ds-portrait-placeholder{min-height:0!important;height:100%;padding:0!important;background:url('assets/daniella-hero.jpg') center 12%/cover no-repeat!important}
-.ds-portrait-placeholder p{display:none!important}
+.ds-menu nav a{font-size:9px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--wine)}
+.ds-menu nav a:hover{text-decoration:underline;text-underline-offset:5px}
 .ds-nameplate{position:relative;z-index:2}
 .wp-block-navigation{display:none!important}
 
-/* Practice cards: lock the same geometry as the approved static design. */
-#practice .ds-card-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important;margin-top:42px!important;align-items:stretch!important}
-#practice .ds-card-grid>.wp-block-group{display:flex!important;min-width:0!important;height:auto!important}
-#practice .ds-card{flex:1 1 auto!important;min-height:340px!important;height:100%!important;padding:28px!important;border-radius:20px!important;display:flex!important;flex-direction:column!important;align-items:stretch!important}
-#practice .ds-card-num{margin:0!important;font:italic 22px/1.2 Georgia,serif!important}
-#practice .ds-card h3{margin:42px 0 10px!important;font:400 28px/1.1 Georgia,serif!important}
-#practice .ds-card p{margin:0!important;font-size:16px!important;line-height:1.72!important;max-width:none!important}
+/* Preserve the approved practice-card typography without duplicating grid rules. */
+#practice .ds-card{min-height:340px}
+#practice .ds-card-num{font:italic 22px/1.2 Georgia,serif!important}
+#practice .ds-card h3{font:400 28px/1.1 Georgia,serif!important}
+#practice .ds-card p{font-size:16px!important;line-height:1.72!important;max-width:none!important}
 
-/* The Site Editor canvas is narrower than the public browser viewport. Keep its
-   desktop preview gutters visually identical to the approved 1280px reference. */
-@media(min-width:901px){
-  .editor-styles-wrapper .ds-shell{width:min(calc(100% - 120px),var(--max))!important}
-}
+/* Existing legacy portrait placeholders remain visually supported, but are never rewritten. */
+.ds-portrait-placeholder{min-height:0!important;height:100%;padding:0!important;background:url('assets/daniella-hero.jpg') center 12%/cover no-repeat!important}
+.ds-portrait-placeholder p{display:none!important}
 
 @media(max-width:900px){
-  .ds-desktop-nav{display:none}.ds-menu{display:block}.ds-header-inner{min-height:82px}.ds-portrait-placeholder{min-height:100%!important;background-position:center 10%!important}
-  #practice .ds-card-grid{grid-template-columns:1fr!important}
-  #practice .ds-card-grid>.wp-block-group{height:auto!important}
-  #practice .ds-card{min-height:0!important;height:auto!important}
+  .ds-menu{display:block}
+  .ds-portrait-placeholder{min-height:100%!important;background-position:center 10%!important}
+  #practice .ds-card{min-height:0}
 }
-@media(max-width:480px){.ds-menu summary{padding:9px 12px}#practice .ds-card{padding:22px!important}#practice .ds-card h3{margin-top:34px!important;font-size:25px!important}}
+@media(max-width:480px){
+  .ds-menu summary{padding:9px 12px}
+  #practice .ds-card h3{font-size:25px!important}
+}
