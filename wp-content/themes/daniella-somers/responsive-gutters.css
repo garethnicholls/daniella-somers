@@ -1,26 +1,49 @@
-/* Restore the approved 1160px layout. Full-width bands, centred content.
-   This is the only homepage layout override; media styling lives separately. */
+/* One homepage layout contract for visitors and the native block editor.
+   The editor's own canvas width determines the breakpoint; no fake device
+   layouts, duplicate content, or changes to saved blocks are needed. */
 :root{--ds-page-gutter:clamp(18px,3vw,40px)}
-.home .wp-block-post-content,
-.home .wp-block-post-content>main,
-.editor-styles-wrapper .wp-block-post-content,
-.editor-styles-wrapper .wp-block-post-content>main{width:100%!important;max-width:none!important;min-width:0!important;margin:0!important;padding:0!important}
-.home .wp-block-post-content :is(.ds-hero,.ds-quote,.ds-section,.ds-contact),
-.editor-styles-wrapper .wp-block-post-content :is(.ds-hero,.ds-quote,.ds-section,.ds-contact){width:100%!important;max-width:none!important;min-width:0!important;margin-left:0!important;margin-right:0!important;padding-left:var(--ds-page-gutter)!important;padding-right:var(--ds-page-gutter)!important;box-sizing:border-box!important}
-.home .wp-block-post-content .ds-shell,
-.editor-styles-wrapper .wp-block-post-content .ds-shell{width:100%!important;max-width:var(--max)!important;min-width:0!important;margin-left:auto!important;margin-right:auto!important;padding-left:0!important;padding-right:0!important;box-sizing:border-box!important}
-.home .wp-block-post-content :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust):not(.ds-shell),
-.editor-styles-wrapper .wp-block-post-content :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust):not(.ds-shell){width:100%!important;max-width:none!important;min-width:0!important}
-.home .wp-block-post-content :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust)>.wp-block-group,
-.editor-styles-wrapper .wp-block-post-content :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust)>.wp-block-group{max-width:none!important;min-width:0!important;margin-left:0!important;margin-right:0!important}
-.home .wp-block-post-content .ds-hero-grid,.editor-styles-wrapper .wp-block-post-content .ds-hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,.88fr)!important;gap:clamp(48px,7vw,96px)!important}
-.home .wp-block-post-content .ds-split,.editor-styles-wrapper .wp-block-post-content .ds-split{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr)!important;gap:clamp(42px,7vw,86px)!important}
-.home .wp-block-post-content .ds-card-grid,.editor-styles-wrapper .wp-block-post-content .ds-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-.home .wp-block-post-content .ds-contact-layout,.editor-styles-wrapper .wp-block-post-content .ds-contact-layout{grid-template-columns:minmax(0,.82fr) minmax(0,1fr) minmax(0,.92fr)!important}
+
+/* WordPress constrains ordinary content to 760px. The homepage is a full-width
+   composition with its own 1160px inner shells. Scope the editor correction to
+   the Home composition so other pages retain their normal editor behaviour. */
+.editor-styles-wrapper:has(.ds-hero){--wp--style--global--content-size:1160px;--ds-page-gutter:clamp(18px,3vw,40px)}
+.editor-styles-wrapper:has(.ds-hero) :is(.is-root-container,.wp-block-post-content){width:100%!important;max-width:none!important;min-width:0!important;margin-inline:0!important;padding-inline:0!important}
+.editor-styles-wrapper:has(.ds-hero) :is(.is-root-container,.wp-block-post-content) > :is(.wp-block-group,main){width:100%!important;max-width:none!important;min-width:0!important;margin-inline:0!important}
+
+:is(.home .wp-block-post-content,.editor-styles-wrapper) > main,
+.home .wp-block-post-content{width:100%!important;max-width:none!important;min-width:0!important;margin:0!important;padding:0!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) :is(.ds-hero,.ds-quote,.ds-section,.ds-contact){width:100%!important;max-width:none!important;min-width:0!important;margin-left:0!important;margin-right:0!important;padding-left:var(--ds-page-gutter)!important;padding-right:var(--ds-page-gutter)!important;box-sizing:border-box!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-shell{width:100%!important;max-width:var(--max)!important;min-width:0!important;margin-left:auto!important;margin-right:auto!important;padding-left:0!important;padding-right:0!important;box-sizing:border-box!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust):not(.ds-shell){width:100%!important;max-width:none!important;min-width:0!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-more,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust)>.wp-block-group{max-width:none!important;min-width:0!important;margin-left:0!important;margin-right:0!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,.88fr)!important;gap:clamp(48px,7vw,96px)!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-split{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr)!important;gap:clamp(42px,7vw,86px)!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-contact-layout{grid-template-columns:minmax(0,.82fr) minmax(0,1fr) minmax(0,.92fr)!important}
 .ds-header-inner.ds-shell,.ds-footer-inner.ds-shell{width:100%!important;max-width:calc(var(--max) + 2 * var(--ds-page-gutter))!important;margin-left:auto!important;margin-right:auto!important;padding-left:var(--ds-page-gutter)!important;padding-right:var(--ds-page-gutter)!important}
-.home .wp-block-post-content :is(.ds-hero-copy,.ds-portrait-wrap,.ds-contact-copy,.ds-contact-form-card,.ds-contact-photo-card,.ds-trust-card){min-width:0!important;max-width:100%!important}
-.home .ds-contact-form-card :is(input,textarea,select){max-width:100%;box-sizing:border-box}
-@media(max-width:1279px) and (min-width:901px){.home .wp-block-post-content .ds-contact-layout,.editor-styles-wrapper .wp-block-post-content .ds-contact-layout{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)!important}.home .wp-block-post-content .ds-contact-trust,.editor-styles-wrapper .wp-block-post-content .ds-contact-trust{grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr))!important}}
-@media(max-width:900px){:root{--ds-page-gutter:clamp(24px,3.5vw,30px)}.home .wp-block-post-content :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-contact-layout,.ds-contact-grid),.editor-styles-wrapper .wp-block-post-content :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-contact-layout,.ds-contact-grid){grid-template-columns:minmax(0,1fr)!important}.home .wp-block-post-content .ds-contact-trust,.editor-styles-wrapper .wp-block-post-content .ds-contact-trust{grid-column:auto;grid-template-columns:repeat(2,minmax(0,1fr))!important}.home .wp-block-post-content .ds-hero-grid{min-height:0!important;padding-top:54px!important;padding-bottom:70px!important}.home .wp-block-post-content .ds-section{padding-top:74px!important;padding-bottom:74px!important}.home .wp-block-post-content .ds-quote{padding-top:64px!important;padding-bottom:64px!important}}
-@media(max-width:620px){:root{--ds-page-gutter:24px}.home .wp-block-post-content .ds-section{padding-top:60px!important;padding-bottom:60px!important}.home .wp-block-post-content .ds-quote{padding-top:52px!important;padding-bottom:52px!important}.home .wp-block-post-content .ds-contact{padding-top:60px!important;padding-bottom:64px!important}.home .wp-block-post-content .ds-contact-trust,.editor-styles-wrapper .wp-block-post-content .ds-contact-trust{grid-template-columns:minmax(0,1fr)!important}.home .wp-block-post-content .ds-section-title{font-size:clamp(36px,10vw,52px)!important;line-height:1.02!important;overflow-wrap:break-word}.home .wp-block-post-content .ds-display{font-size:clamp(48px,13vw,72px)!important;line-height:.92!important;overflow-wrap:break-word}}
-@media(max-width:380px){:root{--ds-page-gutter:18px}}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) :is(.ds-hero-copy,.ds-portrait-wrap,.ds-contact-copy,.ds-contact-form-card,.ds-contact-photo-card,.ds-trust-card){min-width:0!important;max-width:100%!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-contact-form-card :is(input,textarea,select){max-width:100%;box-sizing:border-box}
+@media(max-width:1279px) and (min-width:901px){
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-contact-layout{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-contact-trust{grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:900px){
+:root{--ds-page-gutter:clamp(24px,3.5vw,30px)}
+.editor-styles-wrapper:has(.ds-hero){--ds-page-gutter:clamp(24px,3.5vw,30px)}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-contact-layout,.ds-contact-grid){grid-template-columns:minmax(0,1fr)!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-contact-trust{grid-column:auto;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-hero-grid{min-height:0!important;padding-top:54px!important;padding-bottom:70px!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-section{padding-top:74px!important;padding-bottom:74px!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-quote{padding-top:64px!important;padding-bottom:64px!important}
+}
+@media(max-width:620px){
+:root{--ds-page-gutter:24px}
+.editor-styles-wrapper:has(.ds-hero){--ds-page-gutter:24px}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-section{padding-top:60px!important;padding-bottom:60px!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-quote{padding-top:52px!important;padding-bottom:52px!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-contact{padding-top:60px!important;padding-bottom:64px!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-contact-trust{grid-template-columns:minmax(0,1fr)!important}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-section-title{font-size:clamp(36px,10vw,52px)!important;line-height:1.02!important;overflow-wrap:break-word}
+:is(.home .wp-block-post-content,.editor-styles-wrapper) .ds-display{font-size:clamp(48px,13vw,72px)!important;line-height:.92!important;overflow-wrap:break-word}
+}
+@media(max-width:380px){:root{--ds-page-gutter:18px}.editor-styles-wrapper:has(.ds-hero){--ds-page-gutter:18px}}
