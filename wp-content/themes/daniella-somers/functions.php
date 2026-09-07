@@ -2,9 +2,9 @@
 /** Daniella Somers block theme setup. */
 if (!defined('ABSPATH')) { exit; }
 
-/** One ordered stylesheet pipeline for the public site and Gutenberg. */
+/** One authoritative stylesheet for the public site and Gutenberg. */
 function daniella_theme_styles() {
-    return array('style.css', 'exact.css', 'editable-home.css', 'responsive-gutters.css', 'home-media.css');
+    return array('style.css');
 }
 
 add_action('wp_enqueue_scripts', function () {
