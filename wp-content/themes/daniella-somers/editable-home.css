@@ -1,23 +1,22 @@
-/* Editable content styling only. Layout and responsive gutters are owned by responsive-gutters.css. */
-.ds-hero-editable-image{width:100%;height:100%;margin:0!important}
-.ds-hero-editable-image img{display:block;width:100%!important;height:100%!important;object-fit:cover;object-position:center 12%}
+/* Content appearance only. Layout and responsive gutters are owned by responsive-gutters.css. */
+.ds-hero-editable-image{width:100%;height:100%;margin:0}
+.ds-hero-editable-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 12%}
 /* Room and BACP image styling is owned by home-media.css. */
-.ds-contact-editor{background:#f5e4e6;color:var(--ink);padding:88px 0 96px}
+.ds-contact-editor{background:#f5e4e6;color:var(--ink)}
 .ds-contact-editor .ds-kicker{color:var(--berry)}
 .ds-contact-editor .ds-section-title{color:var(--wine);max-width:680px}
-.ds-contact-layout{display:grid!important;grid-template-columns:minmax(0,.82fr) minmax(0,1fr) minmax(0,.92fr);gap:18px;align-items:start}
 .ds-contact-copy{padding:10px 20px 24px 0}
 .ds-contact-copy>p:not(.ds-kicker):not(.ds-contact-location){max-width:430px;color:var(--muted)}
-.ds-contact-editor .ds-contact-links{display:grid!important;gap:10px;margin-top:24px!important}
-.ds-contact-editor .ds-contact-links .wp-block-button{width:max-content;max-width:100%;margin:0!important}
-.ds-contact-editor .ds-contact-links .wp-block-button__link{background:#fff!important;color:var(--wine)!important;border-color:var(--line)!important;box-shadow:0 8px 24px rgba(81,44,58,.05);text-transform:none;letter-spacing:0;font-size:14px;min-height:46px;padding:0 16px}
-.ds-contact-location{margin:20px 0 6px!important;color:var(--wine)!important;font-weight:600}
+.ds-contact-editor .ds-contact-links{gap:10px;margin-top:24px}
+.ds-contact-editor .ds-contact-links .wp-block-button{width:max-content;max-width:100%;margin:0}
+.ds-contact-editor .ds-contact-links .wp-block-button__link{background:#fff;color:var(--wine);border-color:var(--line);box-shadow:0 8px 24px rgba(81,44,58,.05);text-transform:none;letter-spacing:0;font-size:14px;min-height:46px;padding:0 16px}
+.ds-contact-location{margin:20px 0 6px;color:var(--wine);font-weight:600}
 .ds-contact-editor .ds-bacp-link{color:var(--berry);text-decoration:underline;text-underline-offset:5px}
 .ds-contact-form-card,.ds-contact-photo-card,.ds-trust-card{background:rgba(255,255,255,.82);border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 50px rgba(81,44,58,.06)}
 .ds-contact-form-card{padding:30px}
-.ds-contact-form-card h3{font:400 clamp(34px,3.1vw,48px)/1.05 Georgia,serif;color:var(--wine);margin:0 0 8px!important}
-.ds-contact-form-card .ds-contact-note{color:var(--muted);margin:0 0 22px!important}
-.ds-contact-form-card .wpcf7-form p{margin:0 0 15px!important;color:var(--wine);font-size:13px}
+.ds-contact-form-card h3{font:400 clamp(34px,3.1vw,48px)/1.05 Georgia,serif;color:var(--wine);margin:0 0 8px}
+.ds-contact-form-card .ds-contact-note{color:var(--muted);margin:0 0 22px}
+.ds-contact-form-card .wpcf7-form p{margin:0 0 15px;color:var(--wine);font-size:13px}
 .ds-contact-form-card .wpcf7-form-control-wrap{display:block;margin-top:6px}
 .ds-contact-form-card input:not([type="submit"]),.ds-contact-form-card textarea{width:100%;max-width:100%;border:1px solid rgba(81,44,58,.2);background:#fff;border-radius:10px;padding:12px 13px;color:var(--ink);font:inherit;outline:none;box-shadow:none}
 .ds-contact-form-card input:not([type="submit"]){min-height:46px}
@@ -25,19 +24,19 @@
 .ds-contact-form-card input:not([type="submit"]):focus,.ds-contact-form-card textarea:focus{border-color:var(--berry);box-shadow:0 0 0 3px rgba(135,68,93,.12)}
 .ds-contact-form-card input[type="submit"]{width:100%;min-height:50px;border:0;border-radius:999px;background:var(--berry);color:#fff;padding:0 20px;font:600 13px/1 Arial,sans-serif;cursor:pointer}
 .ds-contact-form-card input[type="submit"]:hover{filter:brightness(.96)}
-.ds-contact-privacy{font-size:11px!important;line-height:1.55!important;color:var(--muted)!important;margin:14px 0 0!important}
-.ds-contact-trust{display:grid!important;gap:14px}
+.ds-contact-privacy{font-size:11px;line-height:1.55;color:var(--muted);margin:14px 0 0}
 .ds-contact-photo-card{padding:0;overflow:hidden}
-.ds-contact-portrait{margin:0!important;aspect-ratio:4/4.15;overflow:hidden}
-.ds-contact-portrait img{width:100%!important;height:100%!important;display:block;object-fit:cover;object-position:center 18%}
-.ds-contact-photo-caption{margin:0!important;padding:15px 18px;color:var(--wine)!important;font:400 19px/1.3 Georgia,serif!important}
+.ds-contact-portrait{margin:0;aspect-ratio:4/4.15;overflow:hidden}
+.ds-contact-portrait img{width:100%;height:100%;display:block;object-fit:cover;object-position:center 18%}
+.ds-contact-photo-caption{margin:0;padding:15px 18px;color:var(--wine);font:400 19px/1.3 Georgia,serif}
 .ds-trust-card{padding:22px}
-.ds-trust-list{list-style:none;margin:0!important;padding:0!important;display:grid;gap:12px;color:var(--wine)}
+.ds-trust-list{list-style:none;margin:0;padding:0;display:grid;gap:12px;color:var(--wine)}
 .ds-trust-list li{position:relative;padding-left:22px;font-size:13px;line-height:1.45}
 .ds-trust-list li:before{content:"✓";position:absolute;left:0;top:0;color:var(--berry);font-weight:700}
-.ds-media-slot{display:none}
-.editor-styles-wrapper .ds-media-slot{display:flex!important;min-height:150px;align-items:center;justify-content:center;text-align:center;border:2px dashed rgba(135,68,93,.35);background:rgba(255,255,255,.55);border-radius:18px;padding:24px;color:var(--berry)}
-.editor-styles-wrapper .ds-media-slot p{margin:0!important;font-size:13px!important;max-width:260px}
-@media(max-width:900px){.ds-contact-copy{padding-right:0}.ds-contact-editor{padding-top:72px;padding-bottom:72px}.ds-contact-trust{grid-template-columns:repeat(2,minmax(0,1fr))}.ds-contact-form-card{padding:26px}}
-@media(max-width:620px){.ds-contact-editor{padding-top:60px;padding-bottom:64px}.ds-contact-trust{grid-template-columns:1fr}.ds-contact-form-card{padding:22px}.ds-contact-editor .ds-contact-links .wp-block-button,.ds-contact-editor .ds-contact-links .wp-block-button__link{width:100%}}
+/* Legacy empty slots remain editable, but an uploaded image is never hidden. */
+.ds-media-slot:not(:has(img)){display:none}
+.editor-styles-wrapper .ds-media-slot:not(:has(img)){display:flex;min-height:150px;align-items:center;justify-content:center;text-align:center;border:2px dashed rgba(135,68,93,.35);background:rgba(255,255,255,.55);border-radius:18px;padding:24px;color:var(--berry)}
+.editor-styles-wrapper .ds-media-slot p{margin:0;font-size:13px;max-width:260px}
+@media(max-width:900px){.ds-contact-copy{padding-right:0}.ds-contact-form-card{padding:26px}}
+@media(max-width:620px){.ds-contact-form-card{padding:22px}.ds-contact-editor .ds-contact-links .wp-block-button,.ds-contact-editor .ds-contact-links .wp-block-button__link{width:100%}}
 @media(max-width:380px){.ds-contact-form-card{padding:18px}}
