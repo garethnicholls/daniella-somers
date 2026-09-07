@@ -29,7 +29,7 @@ jobs:
           docker run --rm -v "$PWD/wp-content/themes/daniella-somers:/theme:ro" wordpress:php8.3-fpm sh -c 'find /theme -name "*.php" -type f -exec php -l {} \;'
       - name: Test storage and native media contracts
         run: node --test tests/wordpress-storage.spec.cjs tests/home-media.spec.cjs
-      - name: Test responsive homepage layout
-        run: node --test tests/homepage-layout.spec.cjs
+      - name: Test responsive homepage and editor layout
+        run: node --test tests/homepage-layout.spec.cjs tests/editor-layout.spec.cjs
       - name: Test real homepage with proposed styles
         run: node --test tests/live-homepage.spec.cjs
