@@ -60,3 +60,18 @@ test('an explicit Gutenberg flex or grid choice is not replaced by theme default
     await browser.close();
   }
 });
+
+test('WordPress block gaps do not offset contact columns or trust cards', async () => {
+  const browser = await chromium.launch({ headless: true });
+  try {
+    const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    await page.goto(fixture);
+    const margins = await page.evaluate(() => [
+      ...document.querySelectorAll('.ds-contact-layout>.wp-block-group, .ds-contact-trust>.wp-block-group'),
+    ].map(element => parseFloat(getComputedStyle(element).marginBlockStart) || 0));
+    assert.ok(margins.length >= 5);
+    assert.deepEqual(margins, margins.map(() => 0));
+  } finally {
+    await browser.close();
+  }
+});

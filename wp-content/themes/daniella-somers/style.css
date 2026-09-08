@@ -161,7 +161,7 @@ a{color:inherit}
 .ds-contact-trust:not(.is-layout-flex):not(.is-layout-grid){gap:14px}
 :is(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-contact-layout,.ds-contact-grid,.ds-contact-trust):not(.is-layout-flex):not(.is-layout-grid)>.wp-block-group{max-width:none;min-width:0;margin-inline:0}
 .ds-card-grid:not(.is-layout-flex):not(.is-layout-grid)>.wp-block-group{height:100%}
-.ds-card-grid>.wp-block-group{margin-block-start:0!important}
+:is(.ds-card-grid,.ds-contact-layout,.ds-contact-trust)>.wp-block-group{margin-block-start:0!important}
 .ds-card{min-width:0}.ds-card-grid:not(.is-layout-flex):not(.is-layout-grid) .ds-card{height:100%}
 .ds-card:not(.is-layout-flex):not(.is-layout-grid){display:flex;flex-direction:column;align-items:stretch}
 
