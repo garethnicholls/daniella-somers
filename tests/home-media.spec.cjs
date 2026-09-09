@@ -14,7 +14,7 @@ const base = read('style.css');
 });
 
 test('the existing 1160px composition has one responsive owner', () => {
-  assert.match(base, /--ds-page-gutter:clamp\(18px,3vw,40px\)/);
+  assert.match(base, /--ds-page-gutter:18px/);
   assert.match(base, /max-width:var\(--max\)/);
   assert.match(base, /@media\(max-width:900px\)/);
   assert.match(base, /@media\(max-width:620px\)/);
@@ -30,6 +30,7 @@ test('Home is rendered from saved native blocks without automatic content rewrit
   assert.equal((template.match(/<!-- wp:post-content /g) || []).length, 1);
   assert.match(template, /"align":"full"/);
   assert.doesNotMatch(bootstrap, /wp_insert_post\s*\(|wp_update_post\s*\(|wp_delete_post\s*\(|update_option\s*\(/);
+  assert.match(bootstrap, /register_block_pattern\('daniella-somers\/front-page'/);
   assert.match(helpers, /'blockName' => 'core\/image'/);
   assert.match(helpers, /'linkDestination' => 'none'/);
 });
