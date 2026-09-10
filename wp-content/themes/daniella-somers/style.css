@@ -3,7 +3,7 @@ Theme Name: Daniella Somers Counselling
 Theme URI: https://github.com/garethnicholls/daniella-somers
 Author: Gareth Nicholls
 Description: Editable WordPress block theme matching the approved Daniella Somers main design.
-Version: 1.5.0
+Version: 1.5.1
 Requires at least: 6.6
 Requires PHP: 8.1
 Text Domain: daniella-somers
@@ -217,8 +217,9 @@ body>.wp-site-blocks{padding:0}
 .ds-trust-list li:before{content:"✓";position:absolute;left:0;top:0;color:var(--berry);font-weight:700}
 /* The accreditation block is a full-width trust panel below the calm two-column contact flow. */
 .home .ds-contact-layout>.ds-contact-trust,
-.editor-styles-wrapper .ds-contact-layout>.ds-contact-trust{display:grid;grid-column:1/-1;margin-top:0!important;padding-top:10px}
-.ds-contact-trust .ds-trust-card{display:grid;grid-template-columns:minmax(250px,.72fr) minmax(0,1.28fr);align-items:center;gap:clamp(24px,5vw,64px)}
+.editor-styles-wrapper .ds-contact-layout>.ds-contact-trust{display:grid;grid-template-columns:minmax(0,1fr);grid-column:1/-1;width:100%;max-width:none;margin-top:0!important;padding-top:10px}
+.ds-contact-trust .ds-trust-card{display:grid;grid-template-columns:minmax(250px,.72fr) minmax(0,1.28fr);align-items:center;gap:clamp(24px,5vw,64px);width:100%;max-width:none}
+.ds-contact-trust .ds-trust-card>*{min-width:0;max-width:100%;margin-block-start:0!important}
 .ds-contact-trust .ds-media-slot,.ds-contact-trust .wp-block-image{margin:0!important;min-width:0}
 .ds-contact-trust .ds-media-slot img{display:block;width:100%;height:auto;max-height:170px;object-fit:contain;object-position:center}
 
@@ -282,7 +283,6 @@ body>.wp-site-blocks{padding:0}
   .ds-card-grid.ds-card-grid:not(.is-layout-flex):not(.is-layout-grid),
   .ds-contact-layout.ds-contact-layout:not(.is-layout-flex):not(.is-layout-grid),
   .ds-contact-grid.ds-contact-grid:not(.is-layout-flex):not(.is-layout-grid){grid-template-columns:minmax(0,1fr)}
-  .ds-contact-trust:not(.is-layout-flex):not(.is-layout-grid){grid-template-columns:repeat(2,minmax(0,1fr))}
   .ds-contact-layout>.ds-contact-trust{grid-template-columns:minmax(0,1fr)}
   :is(.home .wp-block-post-content,.editor-styles-wrapper:has(#top)) :is(#about,#qualifications,#fees):not(:has(> .ds-shell)){
     grid-template-columns:minmax(0,1fr);row-gap:34px;padding-inline:var(--ds-page-gutter);
@@ -307,7 +307,9 @@ body>.wp-site-blocks{padding:0}
   .ds-footer-inner{flex-direction:column}
   .ds-buttons .wp-block-button__link{min-height:50px}
   :is(.home .wp-block-post-content,.editor-styles-wrapper:has(#top)) #fees:not(:has(>.ds-shell))>.wp-block-image{aspect-ratio:16/10;margin-top:34px!important;border-radius:22px}
-  .ds-contact-trust .ds-trust-card{grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);gap:26px}
+  .ds-contact-trust .ds-trust-card{grid-template-columns:minmax(0,1fr);gap:22px}
+  .ds-contact-trust .ds-media-slot{width:min(100%,420px);margin-inline:auto!important}
+  .ds-contact-trust .ds-trust-list{width:min(100%,720px);margin-inline:auto}
 }
 
 @media(max-width:700px){
@@ -318,8 +320,7 @@ body>.wp-site-blocks{padding:0}
   .ds-section-title{font-size:clamp(40px,10.5vw,58px)}
   .ds-quote p{font-size:clamp(30px,8vw,48px)}
   .ds-card h3{font-size:26px}
-  .ds-contact-trust .ds-trust-card{grid-template-columns:minmax(0,1fr);gap:22px}
-  .ds-contact-trust .ds-media-slot{width:min(100%,430px);margin-inline:auto!important}
+  .ds-contact-trust .ds-media-slot{width:min(100%,360px)}
 }
 
 @media(max-width:480px){
