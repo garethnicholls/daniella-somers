@@ -29,6 +29,30 @@ add_action('after_setup_theme', function () {
     add_editor_style(daniella_theme_styles());
 });
 
+/** Add useful alternatives to the three known homepage images when older saved blocks have none. */
+add_filter('render_block_core/image', function ($html, $block) {
+    if (!$html || stripos($html, '<img') === false || !class_exists('WP_HTML_Tag_Processor')) { return $html; }
+
+    $processor = new WP_HTML_Tag_Processor($html);
+    if (!$processor->next_tag('img')) { return $html; }
+    if (trim((string) $processor->get_attribute('alt')) !== '') { return $html; }
+
+    $src = (string) $processor->get_attribute('src');
+    $classes = (string) ($block['attrs']['className'] ?? '');
+    $alt = '';
+    if (str_contains($classes, 'ds-hero') || str_contains($src, 'daniella-portrait') || str_contains($src, 'daniella-hero')) {
+        $alt = 'Daniella Somers, counsellor and psychotherapist';
+    } elseif (str_contains($classes, 'ds-room') || str_contains($classes, 'ds-about-room') || str_contains($src, '830c5ec1-f6a4-4938-9308-d38bf7f0e5c8')) {
+        $alt = 'The calm counselling room used for in-person sessions';
+    } elseif (str_contains($classes, 'ds-bacp') || str_contains($classes, 'ds-qualification-bacp') || str_contains($src, '322ce5f9-a060-4d8e-922c-1f3dfcc3cb27')) {
+        $alt = 'BACP Registered Member, MBACP, accredited register mark';
+    }
+
+    if ($alt === '') { return $html; }
+    $processor->set_attribute('alt', $alt);
+    return $processor->get_updated_html();
+}, 10, 2);
+
 /** Keep the two existing production plugins available. */
 add_action('admin_init', function () {
     if (!current_user_can('activate_plugins')) { return; }
