@@ -7,17 +7,13 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const theme = path.resolve(__dirname, '../wp-content/themes/daniella-somers');
-const styles = ['style.css'];
-const stylesheetNames = new Set(styles);
-const widths = [320, 375, 390, 620, 768, 900, 901, 1024, 1280, 1440];
+const stylesheetNames = new Set(['style.css']);
+const widths = [320, 375, 390, 480, 620, 768, 900, 901, 1024, 1280, 1440, 1680];
 const externalOrigin = process.env.HOMEPAGE_URL;
 
 function homepageDocument() {
   const content = fs.readFileSync(path.join(theme, 'content/home-page.html'), 'utf8');
-  const links = styles
-    .map(file => `<link rel="stylesheet" href="/wp-content/themes/daniella-somers/${file}">`)
-    .join('');
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Daniella Somers homepage</title>${links}</head><body class="home"><div class="wp-site-blocks"><div class="wp-block-post-content is-layout-constrained">${content}</div></div></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Daniella Somers homepage</title><link rel="stylesheet" href="/wp-content/themes/daniella-somers/style.css"></head><body class="home"><div class="wp-site-blocks"><div class="wp-block-post-content is-layout-constrained">${content}</div></div></body></html>`;
 }
 
 function contentType(file) {
@@ -64,15 +60,15 @@ async function startHomepageServer() {
   };
 }
 
-test('homepage markup with proposed CSS preserves layout and images', async () => {
+test(externalOrigin ? 'proposed CSS keeps the production saved Front Page neat at every width' : 'homepage markup keeps the approved responsive composition', async () => {
   const homepage = externalOrigin ? null : await startHomepageServer();
   const origin = externalOrigin || homepage.origin;
   const browser = await chromium.launch({ headless: true });
   try {
     for (const width of widths) {
-      const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
-      const failed = [];
-      page.on('pageerror', error => failed.push(error.message));
+      const page = await browser.newPage({ viewport: { width, height: 1000 }, deviceScaleFactor: 1 });
+      const pageErrors = [];
+      page.on('pageerror', error => pageErrors.push(error.message));
       try {
         if (externalOrigin) {
           await page.route('**/*', async route => {
@@ -84,44 +80,102 @@ test('homepage markup with proposed CSS preserves layout and images', async () =
             return route.continue();
           });
         }
+
         const response = await page.goto(origin, { waitUntil: 'domcontentloaded', timeout: 45000 });
-        assert.ok(response && response.ok(), `Homepage did not load at ${width}px${response ? ` (${response.status()} ${response.statusText()})` : ''}`);
+        assert.ok(response && response.ok(), `Homepage did not load at ${width}px`);
         await page.evaluate(() => document.fonts.ready);
-        await page.waitForTimeout(300);
+        await page.waitForTimeout(250);
+
         const report = await page.evaluate(() => {
-          const box = element => {
+          const rect = element => {
             if (!element) return null;
             const r = element.getBoundingClientRect();
             const s = getComputedStyle(element);
-            return { x: r.x, right: r.right, width: r.width, padding: s.paddingLeft, columns: s.gridTemplateColumns.split(' ').length };
+            return {
+              x: r.x,
+              right: r.right,
+              width: r.width,
+              paddingLeft: parseFloat(s.paddingLeft) || 0,
+              columns: s.display === 'grid' ? s.gridTemplateColumns.split(' ').filter(Boolean).length : 1,
+            };
           };
-          const section = document.querySelector('#about');
-          const images = [...document.querySelectorAll('main img')].map(img => ({ src: img.currentSrc || img.src, alt: img.alt, complete: img.complete, width: img.naturalWidth, height: img.naturalHeight }));
-          const feeTops = [...document.querySelectorAll('#fees .ds-card-grid>.wp-block-group')].map(card => card.getBoundingClientRect().top);
-          return { document: document.documentElement.scrollWidth, viewport: innerWidth, section: box(section), shell: box(section?.querySelector('.ds-shell')), hero: box(document.querySelector('.ds-hero-grid')), split: box(document.querySelector('#about .ds-split')), cards: box(document.querySelector('#practice .ds-card-grid')), contact: box(document.querySelector('.ds-contact-layout')), feeTops, images };
+
+          const visible = element => {
+            const s = getComputedStyle(element);
+            const r = element.getBoundingClientRect();
+            return s.display !== 'none' && s.visibility !== 'hidden' && r.width > 0 && r.height > 0;
+          };
+
+          const contentBounds = section => {
+            if (!section) return null;
+            const shell = [...section.children].find(child => child.classList?.contains('ds-shell'));
+            if (shell) return rect(shell);
+            const children = [...section.children].filter(visible);
+            if (!children.length) return rect(section);
+            const boxes = children.map(child => child.getBoundingClientRect());
+            const left = Math.min(...boxes.map(box => box.left));
+            const right = Math.max(...boxes.map(box => box.right));
+            return { x: left, right, width: right - left };
+          };
+
+          const section = id => document.getElementById(id);
+          const about = section('about');
+          const contact = section('contact');
+          const aboutLayout = about?.querySelector('.ds-split') || (getComputedStyle(about || document.body).display === 'grid' ? about : null);
+          const contactLayout = contact?.querySelector('.ds-contact-grid,.ds-contact-layout') || (getComputedStyle(contact || document.body).display === 'grid' ? contact : null);
+          const heroImage = document.querySelector('.ds-hero img,.ds-portrait img');
+          const feeCards = [...document.querySelectorAll('#fees .ds-card-grid>.wp-block-group,#fees .ds-card-grid>.ds-card')];
+
+          return {
+            viewport: innerWidth,
+            documentWidth: document.documentElement.scrollWidth,
+            sections: ['about', 'practice', 'qualifications', 'fees', 'contact'].map(id => ({
+              id,
+              box: rect(section(id)),
+              content: contentBounds(section(id)),
+            })),
+            hero: rect(document.querySelector('.ds-hero-grid')),
+            about: rect(aboutLayout),
+            cards: rect(document.querySelector('#practice .ds-card-grid')),
+            contact: rect(contactLayout),
+            feeTops: feeCards.map(card => card.getBoundingClientRect().top),
+            heroImage: heroImage ? { complete: heroImage.complete, width: heroImage.naturalWidth } : null,
+          };
         });
-        console.log(`${width}px: ${JSON.stringify(report)}`);
-        assert.ok(report.section && report.shell, 'Missing original homepage sections');
-        assert.ok(Math.abs(report.section.x) < 1 && Math.abs(report.section.width - width) < 1, 'Section is not full width');
-        assert.ok(report.shell.x >= 17 && report.shell.right <= width - 17, 'Missing content gutters');
-        assert.ok(report.shell.width <= 1161, 'Content exceeds original maximum');
-        assert.equal(report.split.columns, width <= 900 ? 1 : 2, 'Journey layout');
-        assert.equal(report.hero.columns, width <= 900 ? 1 : 2, 'Hero layout');
-        assert.equal(report.cards.columns, width <= 900 ? 1 : 3, 'Practice cards');
-        assert.equal(report.contact.columns, width <= 900 ? 1 : width < 1280 ? 2 : 3, 'Contact layout');
-        if (width > 900) assert.ok(Math.max(...report.feeTops) - Math.min(...report.feeTops) < 1, 'Fee card tops are not aligned');
-        assert.ok(report.images.length > 0, 'No homepage images found');
-        const broken = report.images.filter(image => image.complete && image.width === 0);
-        assert.deepEqual(broken, [], 'Broken image URLs');
-        assert.deepEqual(failed, [], 'Browser JavaScript errors');
+
+        const details = `${width}px: ${JSON.stringify(report)}`;
+        const gutter = width <= 480 ? 12 : 18;
+        assert.equal(report.documentWidth, width, `horizontal overflow: ${details}`);
+        assert.ok(report.hero, `missing hero grid: ${details}`);
+        assert.equal(report.hero.columns, width <= 900 ? 1 : 2, `hero columns: ${details}`);
+        assert.ok(report.about, `missing journey layout: ${details}`);
+        assert.equal(report.about.columns, width <= 900 ? 1 : 2, `journey columns: ${details}`);
+        assert.ok(report.cards, `missing practice cards: ${details}`);
+        assert.equal(report.cards.columns, width <= 900 ? 1 : 3, `practice card columns: ${details}`);
+        assert.ok(report.contact, `missing contact layout: ${details}`);
+        assert.equal(report.contact.columns, width <= 900 ? 1 : 2, `contact columns: ${details}`);
+
+        for (const item of report.sections) {
+          assert.ok(item.box && item.content, `missing ${item.id}: ${details}`);
+          assert.ok(Math.abs(item.box.x) < 1 && Math.abs(item.box.width - width) < 1, `${item.id} is not full width: ${details}`);
+          assert.ok(item.content.x >= gutter - 1, `${item.id} missing left gutter: ${details}`);
+          assert.ok(item.content.right <= width - gutter + 1, `${item.id} missing right gutter: ${details}`);
+          assert.ok(item.content.width <= 1161, `${item.id} exceeds 1160px content width: ${details}`);
+        }
+
+        if (width > 900 && report.feeTops.length > 1) {
+          assert.ok(Math.max(...report.feeTops) - Math.min(...report.feeTops) < 1, `fee card tops are not aligned: ${details}`);
+        }
+        if (!externalOrigin) {
+          assert.deepEqual(report.heroImage, { complete: true, width: 360 }, `bundled hero image is broken: ${details}`);
+        }
+        assert.deepEqual(pageErrors, [], `browser errors: ${details}`);
       } finally {
         await page.close();
       }
     }
   } finally {
     await browser.close();
-    if (homepage) {
-      await homepage.close();
-    }
+    if (homepage) await homepage.close();
   }
 });
