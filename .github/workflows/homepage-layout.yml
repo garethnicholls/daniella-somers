@@ -27,5 +27,9 @@ jobs:
         run: docker run --rm -v "$PWD/wp-content/themes/daniella-somers:/theme:ro" wordpress:php8.3-fpm sh -c 'find /theme -name "*.php" -type f -exec php -l {} \;'
       - name: Test theme contracts and layout parity
         run: node --test tests/wordpress-storage.spec.cjs tests/home-media.spec.cjs tests/homepage-layout.spec.cjs tests/editor-layout.spec.cjs tests/live-homepage.spec.cjs
+      - name: Test proposed CSS against the real saved WordPress Front Page
+        env:
+          HOMEPAGE_URL: https://daniellasomerscounselling.co.uk/
+        run: node --test tests/live-homepage.spec.cjs
       - name: Test final GitHub Pages front page
         run: node --test tests/pages-site.spec.cjs
