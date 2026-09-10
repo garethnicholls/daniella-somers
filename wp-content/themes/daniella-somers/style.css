@@ -217,7 +217,7 @@ body>.wp-site-blocks{padding:0}
 .ds-trust-list li:before{content:"✓";position:absolute;left:0;top:0;color:var(--berry);font-weight:700}
 /* The accreditation block is a full-width trust panel below the calm two-column contact flow. */
 .home .ds-contact-layout>.ds-contact-trust,
-.editor-styles-wrapper .ds-contact-layout>.ds-contact-trust{display:grid;grid-column:1/-1;margin-top:10px!important}
+.editor-styles-wrapper .ds-contact-layout>.ds-contact-trust{display:grid;grid-column:1/-1;margin-top:0!important;padding-top:10px}
 .ds-contact-trust .ds-trust-card{display:grid;grid-template-columns:minmax(250px,.72fr) minmax(0,1.28fr);align-items:center;gap:clamp(24px,5vw,64px)}
 .ds-contact-trust .ds-media-slot,.ds-contact-trust .wp-block-image{margin:0!important;min-width:0}
 .ds-contact-trust .ds-media-slot img{display:block;width:100%;height:auto;max-height:170px;object-fit:contain;object-position:center}
@@ -277,7 +277,11 @@ body>.wp-site-blocks{padding:0}
   :is(.ds-mobile-menu,.ds-menu) nav{display:grid;position:absolute;right:0;top:48px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;gap:14px;min-width:210px;max-width:min(82vw,300px);box-shadow:0 16px 40px rgba(81,44,58,.12)}
   :is(.ds-mobile-menu,.ds-menu) nav a{font-size:12px;line-height:1.4;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--wine);padding:11px 4px;min-height:44px;display:flex;align-items:center}
 
-  :where(.ds-hero-grid,.ds-split,.ds-card-grid,.ds-contact-layout,.ds-contact-grid):not(.is-layout-flex):not(.is-layout-grid){grid-template-columns:minmax(0,1fr)}
+  .ds-hero-grid.ds-hero-grid:not(.is-layout-flex):not(.is-layout-grid),
+  .ds-split.ds-split:not(.is-layout-flex):not(.is-layout-grid),
+  .ds-card-grid.ds-card-grid:not(.is-layout-flex):not(.is-layout-grid),
+  .ds-contact-layout.ds-contact-layout:not(.is-layout-flex):not(.is-layout-grid),
+  .ds-contact-grid.ds-contact-grid:not(.is-layout-flex):not(.is-layout-grid){grid-template-columns:minmax(0,1fr)}
   .ds-contact-trust:not(.is-layout-flex):not(.is-layout-grid){grid-template-columns:repeat(2,minmax(0,1fr))}
   .ds-contact-layout>.ds-contact-trust{grid-template-columns:minmax(0,1fr)}
   :is(.home .wp-block-post-content,.editor-styles-wrapper:has(#top)) :is(#about,#qualifications,#fees):not(:has(> .ds-shell)){
