@@ -14,7 +14,7 @@ test('homepage keeps its full-width bands and responsive inner layout', async ()
       const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
       await page.goto(fixture);
       const report = await page.evaluate(() => window.layoutReport());
-      const gutter = width <= 480 ? 12 : 18;
+      const gutter = width <= 480 ? 18 : Math.min(40, Math.max(20, width * 0.03));
       const details = `${width}px: ${JSON.stringify(report)}`;
       assert.equal(report.document, width, `horizontal overflow: ${details}`);
       assert.ok(Math.abs(report.section.x) < 1 && Math.abs(report.section.width - width) < 1, `section is not full width: ${details}`);
