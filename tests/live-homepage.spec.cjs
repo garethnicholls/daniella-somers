@@ -100,6 +100,20 @@ test(externalOrigin ? 'proposed CSS keeps the production saved Front Page neat a
             };
           };
 
+          const mediaRect = element => {
+            if (!element) return null;
+            const r = element.getBoundingClientRect();
+            const s = getComputedStyle(element);
+            return {
+              x: r.x,
+              right: r.right,
+              width: r.width,
+              height: r.height,
+              display: s.display,
+              columns: s.display === 'grid' ? s.gridTemplateColumns.split(' ').filter(Boolean).length : 1,
+            };
+          };
+
           const visible = element => {
             const s = getComputedStyle(element);
             const r = element.getBoundingClientRect();
@@ -140,11 +154,18 @@ test(externalOrigin ? 'proposed CSS keeps the production saved Front Page neat a
             contact: rect(contactLayout),
             feeTops: feeCards.map(card => card.getBoundingClientRect().top),
             heroImage: heroImage ? { complete: heroImage.complete, width: heroImage.naturalWidth } : null,
+            room: mediaRect(document.querySelector('#fees>.wp-block-image')),
+            trust: mediaRect(document.querySelector('.ds-contact-layout>.ds-contact-trust')),
+            trustCard: mediaRect(document.querySelector('.ds-contact-trust>.ds-trust-card')),
+            certificateImage: (() => {
+              const image = document.querySelector('.ds-contact-trust img');
+              return image ? { complete: image.complete, width: image.naturalWidth, renderedWidth: image.getBoundingClientRect().width } : null;
+            })(),
           };
         });
 
         const details = `${width}px: ${JSON.stringify(report)}`;
-        const gutter = width <= 480 ? 12 : 18;
+        const gutter = width <= 480 ? 18 : Math.min(40, Math.max(20, width * 0.03));
         assert.equal(report.documentWidth, width, `horizontal overflow: ${details}`);
         assert.ok(report.hero, `missing hero grid: ${details}`);
         assert.equal(report.hero.columns, width <= 900 ? 1 : 2, `hero columns: ${details}`);
@@ -168,6 +189,15 @@ test(externalOrigin ? 'proposed CSS keeps the production saved Front Page neat a
         }
         if (!externalOrigin) {
           assert.deepEqual(report.heroImage, { complete: true, width: 360 }, `bundled hero image is broken: ${details}`);
+        } else {
+          assert.ok(report.room && report.room.width > 0 && report.room.height > 0, `room image is hidden: ${details}`);
+          assert.ok(report.room.x >= gutter - 1 && report.room.right <= width - gutter + 1, `room image leaves the content gutter: ${details}`);
+          const expectedRatio = width <= 480 ? 4 / 3 : width <= 900 ? 16 / 10 : 2.15;
+          assert.ok(Math.abs(report.room.width / report.room.height - expectedRatio) < 0.08, `room image crop is wrong: ${details}`);
+          assert.ok(report.trust && report.trust.display === 'grid' && report.trust.width > 0, `accreditation panel is hidden: ${details}`);
+          assert.ok(Math.abs(report.trust.width - report.contact.width) < 1, `accreditation panel is not aligned with contact content: ${details}`);
+          assert.equal(report.trustCard.columns, width <= 700 ? 1 : 2, `accreditation layout is wrong: ${details}`);
+          assert.ok(report.certificateImage?.complete && report.certificateImage.width > 0 && report.certificateImage.renderedWidth > 0, `certificate image is broken: ${details}`);
         }
         assert.deepEqual(pageErrors, [], `browser errors: ${details}`);
       } finally {
