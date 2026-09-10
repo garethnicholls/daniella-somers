@@ -31,6 +31,8 @@ test('the saved room and accreditation images are part of the published composit
   assert.match(base, /\.home \.ds-contact-layout>\.ds-contact-trust,[\s\S]*display:grid/);
   assert.match(base, /\.ds-contact-trust \.ds-trust-card\{display:grid/);
   assert.match(base, /\.ds-contact-layout>\.ds-contact-trust\{grid-template-columns:minmax\(0,1fr\)\}/);
+  assert.match(base, /@media\(max-width:900px\)[\s\S]*\.ds-contact-trust \.ds-trust-card\{grid-template-columns:minmax\(0,1fr\)/);
+  assert.doesNotMatch(base, /\.ds-contact-trust:not\(\.is-layout-flex\):not\(\.is-layout-grid\)\{grid-template-columns:repeat\(2/);
   assert.doesNotMatch(base, /\.home \.ds-contact-layout>\.ds-contact-trust\{display:none\}/);
 });
 
