@@ -34,3 +34,10 @@ test('Home is rendered from saved native blocks without automatic content rewrit
   assert.match(helpers, /'blockName' => 'core\/image'/);
   assert.match(helpers, /'linkDestination' => 'none'/);
 });
+
+test('published blocks stay aligned when Gutenberg drops legacy wrapper classes', () => {
+  assert.match(base, /\.home #practice > \*\{width:100%;max-width:var\(--max\);margin-inline:auto!important\}/);
+  assert.match(base, /\.home :is\(#about,#qualifications,#fees\)\{/);
+  assert.match(base, /padding-inline:max\(var\(--ds-page-gutter\),calc\(\(100% - var\(--max\)\)\/2\)\)/);
+  assert.match(base, /\.home :is\(\.ds-hero-grid,\.ds-split,\.ds-card-grid,\.ds-contact-layout,\.ds-contact-grid\) > \*\{margin-block-start:0!important\}/);
+});
