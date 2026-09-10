@@ -117,6 +117,8 @@ test(externalOrigin ? 'proposed CSS keeps the production saved Front Page neat a
             return {
               x: r.x,
               right: r.right,
+              y: r.y,
+              bottom: r.bottom,
               width: r.width,
               height: r.height,
               display: s.display,
@@ -167,6 +169,8 @@ test(externalOrigin ? 'proposed CSS keeps the production saved Front Page neat a
             room: mediaRect(document.querySelector('#fees>.wp-block-image')),
             trust: mediaRect(document.querySelector('.ds-contact-layout>.ds-contact-trust')),
             trustCard: mediaRect(document.querySelector('.ds-contact-trust>.ds-trust-card')),
+            trustMedia: mediaRect(document.querySelector('.ds-contact-trust .ds-media-slot')),
+            trustList: mediaRect(document.querySelector('.ds-contact-trust .ds-trust-list')),
             certificateImage: (() => {
               const image = document.querySelector('.ds-contact-trust img');
               return image ? { complete: image.complete, width: image.naturalWidth, renderedWidth: image.getBoundingClientRect().width } : null;
@@ -206,7 +210,14 @@ test(externalOrigin ? 'proposed CSS keeps the production saved Front Page neat a
           assert.ok(Math.abs(report.room.width / report.room.height - expectedRatio) < 0.08, `room image crop is wrong: ${details}`);
           assert.ok(report.trust && report.trust.display === 'grid' && report.trust.width > 0, `accreditation panel is hidden: ${details}`);
           assert.ok(Math.abs(report.trust.width - report.contact.width) < 1, `accreditation panel is not aligned with contact content: ${details}`);
-          assert.equal(report.trustCard.columns, width <= 700 ? 1 : 2, `accreditation layout is wrong: ${details}`);
+          assert.ok(Math.abs(report.trustCard.width - report.trust.width) < 1, `accreditation card is squeezed into a partial column: ${details}`);
+          assert.equal(report.trustCard.columns, width <= 900 ? 1 : 2, `accreditation layout is wrong: ${details}`);
+          assert.ok(report.trustMedia && report.trustList, `accreditation content is missing: ${details}`);
+          if (width <= 900) {
+            assert.ok(report.trustMedia.bottom <= report.trustList.y + 1, `accreditation text overlaps its image: ${details}`);
+          } else {
+            assert.ok(report.trustMedia.right <= report.trustList.x + 1, `accreditation text overlaps its image: ${details}`);
+          }
           assert.ok(report.certificateImage?.complete && report.certificateImage.width > 0 && report.certificateImage.renderedWidth > 0, `certificate image is broken: ${details}`);
         }
         assert.deepEqual(pageErrors, [], `browser errors: ${details}`);
