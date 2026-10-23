@@ -41,6 +41,16 @@ body>.wp-site-blocks{padding:0}
 .editor-styles-wrapper:has(#top) .wp-block-post-content{
   width:100%;max-width:none;min-width:0;margin:0;padding:0;
 }
+.editor-styles-wrapper:has(.ds-hero){
+  --wp--style--global--content-size:1160px;
+}
+.editor-styles-wrapper:has(.ds-hero) :is(.is-root-container,.wp-block-post-content){
+  width:100%!important;max-width:none!important;min-width:0!important;
+  margin-inline:0!important;padding-inline:0!important;
+}
+.editor-styles-wrapper:has(.ds-hero) :is(.is-root-container,.wp-block-post-content)>:is(.wp-block-group,main){
+  width:100%!important;max-width:none!important;min-width:0!important;margin-inline:0!important;
+}
 .home .wp-block-post-content>main,
 .editor-styles-wrapper:has(#top) .wp-block-post-content>main{
   width:100%;max-width:none;min-width:0;margin:0;padding:0;
