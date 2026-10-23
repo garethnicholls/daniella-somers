@@ -1,65 +1,35 @@
 # Daniella Somers Counselling
 
-Presentation-ready counselling website concepts plus an editable WordPress block theme for Daniella Somers.
+The approved design is previewed at [garethnicholls.github.io/daniella-somers](https://garethnicholls.github.io/daniella-somers/) and deployed through GitHub Pages with `daniellasomerscounselling.co.uk` as its custom domain.
 
-The project includes three visual directions: Main closely follows the calm, editorial feel of the reference site, Option B is a distinctly modern navy editorial layout, and Option C is a distinctly soft blush-and-rose direction.
+The same design is supplied as the installable **Daniella Somers Counselling** WordPress block theme in `wp-content/themes/daniella-somers/`.
 
-## Public previews
+## Authoritative layout
 
-- Main: `https://garethnicholls.github.io/daniella-somers/`
-- Option B: `https://garethnicholls.github.io/daniella-somers/option-b/`
-- Option C: `https://garethnicholls.github.io/daniella-somers/option-c/`
+- `index.html` is the exact visual reference published by GitHub Pages.
+- `wp-content/themes/daniella-somers/content/home-page.html` contains the equivalent native WordPress blocks.
+- `wp-content/themes/daniella-somers/style.css` is the theme’s only stylesheet and is loaded in both the public site and block editor.
+- `templates/front-page.html` renders the selected WordPress front page at full width without adding another layout layer.
 
-## Latest design refresh
+Keeping a single theme stylesheet prevents `exact.css`, editor CSS, gutter CSS and media CSS from overriding one another. The responsive browser tests verify the same geometry in the public WordPress view and native editor.
 
-All three concepts now use Daniella's supplied portrait at the top of the page and again where appropriate lower down. They have separate typography, layout systems, colour palettes, logo treatments and content rhythms so they are genuine client choices rather than the same page recoloured.
+## GitHub Pages
 
-## Review it in GitHub Codespaces
+Every push to `main` runs `.github/workflows/pages.yml`. The published artifact contains only:
 
-1. Open this repository in GitHub.
-2. Create a Codespace from `main`.
-3. The devcontainer starts a static preview server on port `8080`.
-4. Open the **Ports** tab if the site does not open automatically.
-5. Port `8080` is configured as **Public**.
+- `index.html`
+- `assets/daniella-hero.jpg`
+- `CNAME`
+- `.nojekyll`
 
-A Codespaces forwarded-port URL is a temporary review environment, not permanent hosting. The Codespace must be running for the link to work. GitHub Pages is used for the public previews above.
+## WordPress theme package
 
-## What the showcase includes
+Every theme change on `main` runs `.github/workflows/package-wordpress-theme.yml`, which produces `daniella-somers.zip` as a downloadable workflow artifact.
 
-- Main concept inspired by the supplied counselling reference style
-- Distinct modern/serene Option B
-- Distinct soft/empowering Option C
-- Daniella portrait-led hero on every option
-- Custom Daniella Somers logo/monogram treatments
-- About, Practice/Support, Fees and Contact sections
-- Responsive layouts for mobile, tablet and desktop
-- Accessible semantic structure and clear calls to action
+To preview locally, run:
 
-## Important demo-content note
+```sh
+python3 -m http.server 8080
+```
 
-The photography, fee, availability, location wording and `hello@daniellasomers.co.uk` email are **concept content for review only**. Confirm Daniella's real qualifications, memberships, fees, availability, address/location, contact details and professional wording before production launch.
-
-The portrait asset in `assets/daniella-hero.jpg` is the supplied portrait used for the design concepts.
-
-## WordPress editing
-
-The production theme lives at:
-
-`wp-content/themes/daniella-sommers`
-
-It is a native block theme designed for the WordPress Site Editor, allowing the site owner to edit copy, headings, navigation, imagery, fees, contact details and sections without touching code.
-
-## Full local WordPress development
-
-1. Install Docker Desktop.
-2. Run `docker compose up -d`.
-3. Open `http://localhost:8080`.
-4. Complete WordPress setup.
-5. Activate **Daniella Somers Counselling** under **Appearance → Themes**.
-6. Edit through **Appearance → Editor**.
-
-When using Docker WordPress locally, stop the simple Codespaces/static preview first if both are trying to use port 8080.
-
-## Productionising later
-
-Only after the design/content is approved do you need to choose hosting and buy/connect a domain. Before launch, replace the demo details and configure SSL, backups, form spam protection, privacy policy, search metadata, analytics if wanted, and cookie controls only where required by the technologies actually deployed.
+Then open `http://localhost:8080/`.

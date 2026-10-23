@@ -24,12 +24,11 @@ test('existing content and configuration are not reset at startup', () => {
   assert.doesNotMatch(functions, /require_once[^;]*home-media-stability|require_once[^;]*block-editor-stability/);
 });
 
-test('one ordered stylesheet pipeline is shared by the editor and public site', () => {
+test('one authoritative stylesheet is shared by the editor and public site', () => {
   const php = read('wp-content/themes/daniella-somers/functions.php');
-  assert.match(php, /return array\('style\.css', 'exact\.css', 'editable-home\.css', 'responsive-gutters\.css', 'home-media\.css'\)/);
+  assert.match(php, /return array\('style\.css'\)/);
   assert.match(php, /add_editor_style\(daniella_theme_styles\(\)\)/);
-  const exact = read('wp-content/themes/daniella-somers/exact.css');
-  assert.doesNotMatch(exact, /editor-styles-wrapper|grid-template-columns/);
+  assert.equal(fs.readdirSync(path.join(root, 'wp-content/themes/daniella-somers')).filter(file => file.endsWith('.css')).join(','), 'style.css');
 });
 
 test('image processing and upload limits remain available', () => {
